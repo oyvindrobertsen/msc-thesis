@@ -1,33 +1,49 @@
 %% Master Thesis Template
 %% Please update the specification through this link: https://daim.idi.ntnu.no/howto_thesis_submission.pdf
-
+\pdfminorversion=7
 \documentclass[pdftex,10pt,b5paper,twoside]{book}
 \usepackage[lmargin=25mm,rmargin=25mm,tmargin=27mm,bmargin=30mm]{geometry}
 
-\input{docsetup.tex}
+\input{misc/docsetup.tex}
 
 \begin{document}
 
 %% PART 1
 %%The title page will be automatically generated and added by the DAIM system
-\input{dedication.tex}		%% Optional
+%%\input{chapters/dedication.tex}		%% Optional
 
 %% PART 2
-\input{summary.tex}		%% Optional
-\input{preface.tex}		%% Optional
-\input{list.tex}			%% Generate TOC, list of tables, and list of figures automatically
-\input{abbreviations.tex}	%% Optional
+\input{chapters/abstract.tex}		%% Optional
+\input{chapters/preface.tex}		%% Optional
+\input{misc/list.tex}			%% Generate TOC, list of tables, and list of figures automatically
+\input{misc/abbreviations.tex}	%% Optional
 
 %% PART 3 -- The Chapters
-\input{chapter1.tex}		%% Edit each chapter
-\input{chapter2.tex}
-\input{chapter3.tex}
-\input{chapter4.tex}
-\input{chapter5.tex}
-\input{chapter6.tex}
+\input{chapters/chapter1.tex}		%% Edit each chapter
+\input{chapters/chapter2.tex}
+\input{chapters/chapter3.tex}
+\input{chapters/chapter4.tex}
+\input{chapters/chapter5.tex}
+\input{chapters/chapter6.tex}
+\input{chapters/chapter7.tex}
+\input{chapters/chapter8.tex}
 
 %% PART 4
-\input{references.tex}	%% Edit your references in "mylib.bib"
-\input{appendix.tex}		%% Optional
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\renewcommand{\headrulewidth}{0.1ex}
+\renewcommand{\footrulewidth}{0.1ex}
+\fancyfoot[LE,RO]{\thepage}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[LE,RO]{\thepage}\renewcommand{\headrulewidth}{0ex}}
+
+\addcontentsline{toc}{chapter}{Bibliography}
+
+\bibliographystyle{plain}
+\bibliography{thesis-refs}
+
+\cleardoublepage
+\input{chapters/appendix.tex}		%% Optional
 
 \end{document}

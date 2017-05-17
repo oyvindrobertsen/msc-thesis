@@ -27,5 +27,7 @@ thesis.pdf
 *.fls
 *.tdo
 *.xml
+*.glsdefs
+auto
 
 .DS_Store

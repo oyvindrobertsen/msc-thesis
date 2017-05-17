@@ -13,4 +13,4 @@ watch:
 	$(TEXMAKE) -pvc $(TEX)
 
 clean:
-	rm -rf *.aux *.bbl *.blg *dvi *.log *.out *.synctex.gz *.toc *.lot *.lof
+	rm -rf *.aux *.bbl *.blg *dvi *.log *.out *.synctex.gz *.toc *.lot *.lof *.glsdefs *.ist *.pdf *.prv *.glo *.abl *.acn *.fdb_latexmk *.fls
