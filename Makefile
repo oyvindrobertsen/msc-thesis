@@ -2,7 +2,7 @@
 FILE=thesis
 TEX=$(FILE).tex
 PDF=$(FILE).pdf
-TEXMAKE=latexmk -pdf
+TEXMAKE=latexmk -pdf -shell-escape
 
 all: $(PDF)
 

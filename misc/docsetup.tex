@@ -10,7 +10,10 @@
 \usepackage[textsize=tiny]{todonotes}
 \usepackage[Lenny]{fncychap}
 \usepackage[pdftex,bookmarks=true]{hyperref}
-\usepackage[pdftex]{hyperref}
+\usepackage{xparse}
+\usepackage[export]{adjustbox}
+\usepackage{subfig}
+\usepackage{minted}
 \hypersetup{
     colorlinks,%
     citecolor=black,%
@@ -28,6 +31,20 @@
 \usepackage{float}
 %\floatstyle{boxed} 
 \restylefloat{figure}
+
+\newsubfloat{figure}
+\newsavebox{\mintedbox}
+
+\NewDocumentEnvironment{mintedsubfloat}{oom}
+ {\begin{lrbox}{\mintedbox}\begin{minipage}{#3}}
+ {\end{minipage}\end{lrbox}%
+  \IfNoValueTF{#1}
+    {\subfloat{\usebox{\mintedbox}}}
+    {\IfNoValueTF{#2}
+       {\subfloat[#1]{\usebox{\mintedbox}}}
+       {\subfloat[#1][#2]{\usebox{\mintedbox}}}%
+    }%
+ }
 
 \usepackage[toc, nonumberlist, acronym]{glossaries}
 \makeglossaries
