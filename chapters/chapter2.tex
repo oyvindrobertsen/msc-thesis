@@ -12,8 +12,6 @@ problems.
 
 \subsection{Basic, EA}
 
-
-
 \subsection{Goldberg, GA}
 
 \subsection{Koza, Genetic programming}
@@ -21,6 +19,149 @@ problems.
 \section{Development}
 
 \subsection{Cellular Automata}
+
+\subsection{DS2 machine}
+
+\tikzstyle{block} = [draw, fill=white!20, rectangle, 
+    minimum height=2em, minimum width=5em]
+\tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+\begin{figure}[ht]
+  \begin{adjustbox}{max size={\textwidth}}
+  \begin{tikzpicture}
+  [help lines/.style={draw=black},
+  every node/.style={help lines,rectangle,minimum size=3mm},
+  cellular automaton/.style={draw=none,row sep=0mm,column sep=0mm, ampersand replacement=\&, label=above:#1},
+  cellular automaton2/.style={draw=none,row sep=0mm,column sep=0mm, ampersand replacement=\&, label=below:#1},
+  w/.style={fill=white,help lines},
+  b/.style={fill=black, help lines},
+  r/.style={fill=red, help lines},
+  g/.style={fill=black!30!green,help lines}]
+
+    \matrix (DS0) [cellular automaton={DS 0}] {
+      \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[w] {};\& \node[g] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[w] {}; \\
+    };
+    \matrix (DS1) [cellular automaton={DS 1}, right=of DS0] {
+      \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[w] {};\& \node[g] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[g] {};\& \node[g] {};\& \node[g] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[w] {};\& \node[r] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[w] {}; \\
+    };
+    \matrix (SS0) [cellular automaton2={SS 0}, below left=of DS1] {
+      \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[w] {};\& \node[b] {}; \\
+      \node[b] {};\& \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[w] {};\& \node[b] {};\& \node[b] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[b] {};\& \node[b] {};\& \node[w] {};\& \node[b] {}; \\
+    };
+    \matrix (SS1) [cellular automaton2={SS 1}, right=of SS0] {
+      \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[w] {};\& \node[b] {}; \\
+      \node[b] {};\& \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[b] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[b] {};\& \node[b] {};\& \node[w] {};\& \node[b] {}; \\
+    };
+    \matrix (SSN) [cellular automaton2={SS N}, right=of SS1] {
+      \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[w] {};\& \node[b] {}; \\
+      \node[b] {};\& \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[b] {};\& \node[b] {};\& \node[w] {};\& \node[b] {}; \\
+    };
+    \matrix (SS01) [cellular automaton2={SS 0}, right=of SSN] {
+      \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[w] {};\& \node[b] {}; \\
+      \node[b] {};\& \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[b] {};\& \node[b] {};\& \node[w] {};\& \node[b] {}; \\
+    };
+    \matrix (SS11) [cellular automaton2={SS 1}, right=of SS01] {
+      \node[w] {};\& \node[b] {};\& \node[b] {};\& \node[w] {};\& \node[b] {}; \\
+      \node[b] {};\& \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[b] {};\& \node[b] {};\& \node[w] {};\& \node[b] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[w] {};\& \node[b] {}; \\
+    };
+    \matrix (SSN1) [cellular automaton2={SS N}, right=of SS11] {
+      \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[w] {};\& \node[b] {}; \\
+      \node[b] {};\& \node[w] {};\& \node[b] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[w] {};\& \node[b] {}; \\
+      \node[w] {};\& \node[b] {};\& \node[b] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[b] {};\& \node[b] {};\& \node[w] {};\& \node[b] {}; \\
+    };
+    \matrix (DS2) [cellular automaton={DS 2}, above=of SS11] {
+      \node[w] {};\& \node[w] {};\& \node[g] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[w] {};\& \node[g] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[g] {};\& \node[g] {};\& \node[g] {};\& \node[g] {};\& \node[g] {}; \\
+      \node[w] {};\& \node[w] {};\& \node[r] {};\& \node[w] {};\& \node[w] {}; \\
+      \node[w] {};\& \node[w] {};\& \node[g] {};\& \node[w] {};\& \node[w] {}; \\
+    };
+
+    \node[draw=none] at ($(SS1)!.5!(SSN)$) {\ldots};
+    \node[draw=none] at ($(SS11)!.5!(SSN1)$) {\ldots};
+
+    \draw[->] (DS0) -- (DS1);
+    \draw[->] (DS1) -- (DS2);
+    \draw[->] (SS0) -- (SS1);
+    \draw[->] (SS01) -- (SS11);
+    \draw[black] (DS1.south west) -- (SS0.north west);
+    \draw[black] (DS1.south east) -- (SSN.north east);
+    \draw[black] (DS2.south west) -- (SS01.north west);
+    \draw[black] (DS2.south east) -- (SSN1.north east);
+    \draw[thick, ->] (2, 2) -- (12,2) node[midway, above, draw=none] {Time};
+  \end{tikzpicture}
+  \end{adjustbox}
+  \caption{
+    Development starting from a single green cell using the growth
+    rule in Figure~\ref{fig:growth-rules}.
+  }\label{fig:dev-example}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[g/.style={draw, minimum size=3mm,   
+        fill=black!30!green},w/.style={draw, minimum size=3mm},r/.style={draw, minimum size=3mm, fill=red},
+      m/.style={matrix of nodes, column sep=1pt, row sep=1pt, draw, label=below:#1}, node distance=1pt]
+
+    \matrix (A) [m={Gw}]{
+      &|[w]|\\
+      |[w]|&|[w]|&|[g]|\\
+      &|[w]|\\
+    };
+    \matrix (B) [m={Gn}, right=of A]{
+      &|[w]|\\
+      |[w]|&|[w]|&|[w]|\\
+      &|[g]|\\
+    };
+    \matrix (C) [m={Ge}, right=of B]{
+      &|[w]|\\
+      |[g]|&|[w]|&|[w]|\\
+      &|[w]|\\
+    };
+    \matrix (D) [m={Gs1}, right=of C]{
+      &|[g]|\\
+      |[w]|&|[r]|&|[w]|\\
+      &|[w]|\\
+    };
+    \matrix (E) [m={Gs2}, right=of D]{
+      &|[r]|\\
+      |[w]|&|[g]|&|[w]|\\
+      &|[w]|\\
+    };
+  \end{tikzpicture}
+  \caption{
+    Growth rules for a cellular developmental system where cells are
+    either empty or of the green type.
+  }\label{fig:growth-rules}
+
+\end{figure}
 
 \section{Reservoir Computing}
 

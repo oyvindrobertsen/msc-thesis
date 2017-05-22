@@ -16,10 +16,10 @@ for the software API.
 \section{Convey Wolverine WX-2000 Application Accelerator}
 
 The Convey Wolverine WX-2000 is a PCIe-mounted coprocessor equipped with a
-Xilinx Virtex-7 XC7V2000T FPGA and four SO-DIMM slots allowing for up to 64 GB
-of on-chip memory. \figurename~\ref{fig:convey-wx-card} shows how a Wolverine
+Xilinx Virtex-7 XC7V2000T FPGA and four DDR3 SO-DIMM slots allowing for up to 64
+GB of on-chip memory. \figurename~\ref{fig:convey-wx-card} shows how a Wolverine
 coprocessor is organized at a high level. The host computer communicates with
-the card over PCIe at a max bandwidth of 8 GB/s. On the coprocessor the Host
+the card over PCIe at a max bandwidth of 8 GB/s. On the coprocessor, the Host
 Interface controller (HIX) is responsible for decoding the data sent from the
 host. Data can either be stored in the on-board memory, or passed directly to an
 the FPGA.
@@ -87,7 +87,7 @@ incorporated into an FPGA design flow.
 
 To avoid having to start entirely from scratch, it was decided that porting the
 CARP hardware platform to Chisel would be done in a top-down fashion. That is,
-start by instantiating Lundals toplevel module as a blackbox in the Chisel
+starting by instantiating Lundals toplevel module as a blackbox in the Chisel
 design and implement downward in the module hierarchy as needed when extending
 the functionality of the platform. \figurename~\ref{fig:hw-build-process} gives
 an overview of the build process. All parameterization is gathered in the Chisel
@@ -135,7 +135,8 @@ class Sample(w: Int) extends Module {
 The software API is written in C, compiled on CentOS 6.5, Linux kernel version
 2.6.32-431 with GCC version 4.4.7. Outside of the C standard library, the API
 has only one dependency; the Convey Personality Development Kit. It is included
-routines related to communicating with the Convey coprocessor.
+via the \texttt{wmd\_user.h} header and provides functions and routines related
+to communicating with the Convey coprocessor.
 
 
 \cleardoublepage

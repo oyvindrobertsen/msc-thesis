@@ -2,5 +2,122 @@
 
 \chapter{Introduction}
 
+In recent years, research into computation using non-traditional physical
+mediums and paradigms, so called unconventional computing, has seen increased
+interest. With challenges currently facing traditional architectures, such as
+the von Neumann bottleneck and ensuring continued scalability and reliability,
+unconventional computation presents possible solutions from a new perspective.
+\todo{reword these sentences? same as spec proj} Biologically inspired
+computing is one approach to unconventional computation. It seeks to apply
+evolution, developement and other biological processes onto the design of both
+computer architectures and artificial intelligence systems. A common trait for
+many biological systems is that complex behaviour emerges from local
+interactions between simple units, whereas traditional computer architectures
+have been designed in a top-down fashion, composing complex modules and
+directing how information should flow between them. Alongside complex emergent
+behavior, biological systems often exhibit abilities such as self-reproduction,
+self-regulation and strong adaptability. These are desireable abilities in
+computing systems, but they are hard to implement.
+
+Cellular computing, introduced by Sipper in~\cite{Sipper1999}, is one example of
+a paradigm utilizing a bottom-up design methodology. Consisting of three core
+principles; simplicity, vast parallelism and locality, cellular computing seeks
+to harness the emergence of complex global behaviour from local interaction
+between simple cells at a large scale. One of the central problems with the
+paradigm is how one should go about designing/programming it. Specifying the
+functionality and potentially the connectivity of each cell manually while
+ensuring that the desired behaviour is achieved at a global level, is
+infeasible, so a different approach is needed. A potential solution is to
+automate the design through artificial evolution~\cite{Sipper2004}.
+
+The POE-model, introduced by Sanchez et al~\cite{Sanchez1997}, is a taxonomy
+commonly used to describe bio-inspired design methodologies using three categories:
+phylogeny, ontogeny and epigenesis. Phylogenesis relates to evolution, ontogeny
+encompasses systems that mimic biological development and epigenetic systems
+adapt to environmental change. These categories are not mutually exclusive. The
+use of artificial evolution to program a cellular computing system is an example
+of an phylogenetic system.
+
+In artificial evolution, an individual represents a potential solution to some
+problem. In the case of using evolution to design cellular computing systems,
+the individual, or genome, has to encode both the behavior of each cell as well
+as the system, or organism, as a whole in order to represent a complete
+solution. This means that the size of the genome grows linearly with the size of
+the organism. In natural evolution, the genome has a different role. It serves
+as a set of rules governing the growth and development of cells at a local
+level, based on the types of surrounding cells and environmental feedback. This
+can be incorporated into the cellular computing paradigm as an ontogenetic
+aspect~\cite{Tufte2005a}. By evolving the developmental rules instead of the
+system as a whole, arbitrarily large and complex organisms can develop from a
+single cell based on a genome of fixed size. Systems that separate growth and
+behavior in this manner are called dynamical systems with dynamical structure
+($DS^2$)~\cite{Tufte2016}.
+
+The Cellular Automata Research Platform (CARP) is a long-running project at
+NTNU, dedicated to developing hardware that facilitates research into artificial
+evolution and development of cellular computing architectures. Based on the
+Virtual SBlock architecture presented by Haddow and Tufte~\cite{Haddow2000a},
+the system consists of programmable cells laid out in a regular one-, two- or
+three-dimensional grid, where each cell is connected to the cells in the von
+Neumann neighborhood around it. Cells can be in one of two states, either alive
+or dead. Based on their type, cells are programmed with a look-up-table (LUT)
+governing the transition between states based on the states of neighboring cells
+and the state of the cell itself. All cells are updated synchronously in
+discrete time steps. Development is simulated as a separate process, wherein
+cells transition between types using a LUT of development rules, taking both
+states and types of neighboring cells as input. This process also happens
+synchronously and in descrete development steps.
+
+The CARP system is implemented on reconfigurable hardware, an FPGA, and is
+controlled by a program running on a host computer. Typically, the host program
+will implement the phylogenetic aspect of the system by evolving a population
+wherein each individual is a set of developmental rules. The CARP hardware is
+used to assess the fitness of each individual through development and simulation
+of the cellular organism. 
+
+Reservoir Computing (RC) is an exiting, new field of research within machine
+learning and intelligent systems. RC-systems work by imposing input data as
+perturbations on a dynamic system (the reservoir), and performing a linear
+classification of the reservoir state some time after the initial perturbation.
+Feedback from the classifier is routed back into the reservoir to allow it to
+regulate and adapt based on its own performance. In the specialization project
+leading up to this thesis, a proof of concept of a cellular reservoir and a
+readout layer implemented as a spiking neural network was simulated in software,
+with positive results. A common problem with cellular computing systems is that
+due to their very nature, it is often hard to formulate problems correctly and
+to interpret the dynamics of the system as answers to those problems. Combining
+the developmental, cellular architectures of the CARP system with the abstract
+computational concept of the RC paradigm will yield a more consistent framework
+for applying cellular computing to real-world problems.\todo{More here?}
+
+In this thesis, the CARP system has been extended to include a trainable
+readout-module based on spiking neural networks which processes the dynamic
+behavior of the cells in real-time. It has also been ported to run on new
+hardware and the codebase has been partially ported to Chisel, a hardware
+definition domain specific language implemented in Scala.
+
+\section{Outline}
+
+This thesis is organized in the following chapters:
+
+\begin{itemize}
+\item \textbf{Chapter 2 - Background}: An overview of theoretical concepts on which the
+  work presented in this thesis is built upon. Also gives an introduction to
+  FPGA technology as well as an overview of some related work.
+\item \textbf{Chapter 3 - Previous Work}: A review of the history of the CARP project.
+\item \textbf{Chapter 4 - Platform}: Information regarding the physical hardware used to
+  run the platform and the toolchains used to develop the project.
+\item \textbf{Chapter 5 - Implementation}: An overview of the implemented system and its
+  constituent parts.
+\item \textbf{Chapter 6 - Verification}: Descriptions of tests used to verify system functionality.
+\item \textbf{Chapter 7 - Discussion}: A review of challenges with the system implemented
+  in this thesis and possible future work.
+\item \textbf{Chapter 8 - Conclusion}: Conluding remarks.
+\item \textbf{Appendices}
+\end{itemize}
 
 \cleardoublepage
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../thesis"
+%%% End:
