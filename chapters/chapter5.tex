@@ -148,6 +148,74 @@ against the MemPort.
 
 \section{Readout}
 
+The Readout module extends the CARP platform with a reconfigurable Spiking
+Neural Network operating in a data-driven fashion, synchronized to the clock of
+state steps performed in the Cellular Automaton. Each layer of the network is
+implemented as a stage in a pipeline. With every step of the CA, new input is
+fed to the input layer and its output is fed as input to the next layer and so
+on throughout the network. In other words, the number of state steps it takes
+for data to propagate through the readout module as a whole is equal to the
+number of layers in the network. The output from the final layer is routed back
+into the CA. It is also stored in the Readout Buffer, from where it can be read
+back to the host.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\linewidth]{fig/readout-io}
+  \caption{Logical overview of the Readout module.}
+  \label{fig:readout-io}
+\end{figure}
+
+\figurename~\ref{fig:readout-io} shows, at a high level of abstraction, how the
+Readout module is connected to the CARP system as whole. A subset of cell states
+are routed out of the CA and into the Readout module as input to the first layer
+of the network, the input layer. Within each layer, a number of neurons process
+the input to the layer, as shown in \figurename~\ref{fig:readout-layer}. Based
+on this input, they update their activation values, which again are fed to the
+next layer to be used as input to those neurons in the next step.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.8\linewidth]{fig/readout-layer}
+  \caption{Logical overiew of one network layer in the Readout module.}
+  \label{fig:readout-layer}
+\end{figure}
+
+The activation value of a neuron can be either 0 or 1, based on a very simple
+calculation, as shown in \figurename~\ref{fig:readout-neuron}. For each of its
+incoming edges, a neuron has a pair of registers, the edge weight and a counter.
+The counter keeps track of how many spikes the neuron has received via the
+corresponding edge, and the weight is a threshold, indicating how many spikes
+must arrive via the edge before the neuron can fire. When all counters values
+are equal to or greater than their weights, the neuron fires and the counters
+are reset.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.8\linewidth]{fig/readout-neuron}
+  \caption{Logical overview of a single neuron in the Readout module.}
+  \label{fig:readout-neuron}
+\end{figure}
+
+To reduce the amount of resources required for the implementation, some
+restrictions apply with regards to which network topologies are possible to
+implement. All networks must be entirely feed-forward, that is they can not
+contain any recurrent connections, and the final layer must contain only a
+single neuron. The topology of a network is given as a parameter to the module
+at synthesis time, and can not be reconfigured while the system is running. It
+describes how many layers the network consists of and how many neurons each of
+them consist of. Networks are also implemented fully connected, all neurons in a
+layer are connected to all neurons in the previous layer.
+
+
+The module can be in one of two states, the default Processing state and the
+Configuration state. In the Processing state, data flows through the network in
+the manner described above. 
+
+
+
+\clearpage
+
 \section{Cellular Automata}
 
 \section{Parameterization}
