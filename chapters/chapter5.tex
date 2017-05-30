@@ -33,20 +33,118 @@ gluing all the modules together is all done in Chisel.
     }
     \label{fig:architecture-detail}
 \end{sidewaysfigure}
+\clearpage
 
 \section{General overview}
 
-This section gives an overview of the platform as a whole, as well as insight
-into the functionality of t
+This section gives an overview of the modules involved in each of the three
+pipeline stages
 
-The CARP hardware platform operates in a three-stage, interlocked pipeline. The
-stages are Fetch, Decode and Execute. In the execute stage, an instruction can
-utilize the CA module, Development module or any of the Control modules. The
-readout module
+\subsection{Fetch}
+
+\subsection{Decode}
+
+\subsection{Execute}
+
+\clearpage
 
 \section{Communication}
 
-The Convey coprocessor connects to the host computer via PCIe. 
+As outlined in section~\ref{sec:coproc}, the FPGA on the Convey coprocessor is
+logically divided into Application Engines within which any custom logic can be
+implemented. Each AE can communicate with the host, the on-board memory and
+other AEs through various interfaces implemented by the Convey PDK, shown in
+\figurename~\ref{fig:convey-ae-io-overview}. To be able to run the CARP hardware
+platform on the coprocessor, the communication module has been reimplemented to
+utilize these interfaces for data transfer.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\linewidth]{fig/convey-ae-io-overview}
+  \caption{Overview of the Convey Application Engine architecture.}
+  \label{fig:convey-ae-io-overview}
+\end{figure}
+
+\figurename~\ref{fig:convey-io-carp-overivew} shows how the CARP hardware is
+implemented within the Convey AE architecture. The communication module has been
+moved out of the main CARP module and rewritten from scratch. In an effort to
+decouple the CARP platform from the underlying hardware and its communication
+interfaces, the new module exposes two very generic interfaces facing
+``outward,'' an Advanced Peripheral Bus (APB)
+\footnote{\url{http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ihi0024c/index.html}
+(Requires registration)} and a memory bus, as shown in
+\figurename~\ref{fig:comm-io}. These are specified fully in
+Appendix~\ref{app:interfaces}. Using generic interfaces with established
+conventions that are easy to connect to other communication interfaces makes it
+easy to move the system to a different platform, should the Convey coprocessors
+become obsolete or defunct.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\linewidth]{fig/convey-io-carp-overview}
+  \caption{Implementation of the CARP platform within the AE architecture.}
+  \label{fig:convey-io-carp-overivew}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.8\linewidth]{fig/comm-io}
+  \caption{
+    The communication module interfaces with the CARP platform through two
+    buffers, transmit and receive. Outwards, the communication module exposes two
+    buses, an APB bus and a generic memory interface.
+  }
+  \label{fig:comm-io}
+\end{figure}
+
+To avoid having to rewrite the Fetch and Send Buffer Mux modules inside CARP,
+the new communication module provides the same interface towards them as the old
+one did; two data buffers, transmit and receive, buffer count signals and
+read/write enable signals. Both data buffers are implemented as FIFO-queues with
+counter registers and ready-valid access interfaces.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.5\linewidth]{fig/comm-fsm}
+  \caption{State machine controlling the communication module.}
+  \label{fig:comm-fsm}
+\end{figure}
+
+\figurename~\ref{fig:comm-fsm} shows the state machine controlling the operation
+of the communication module. From the idle state, a transition to either the
+Write or Read states can be triggered by asserting the PSEL signal on the APB
+bus. Depending on wether or not the PWRITE signal is asserted, the state machine
+will transition into the corresponding state. In this case, write refers to
+writing data from the host to the receive buffer, and read refers to reading
+data from the transmit buffer to the host. In the Write state, three bits in the
+PADDR signal is used to further determine what is to happen. The possible
+actions are as follows:
+
+\begin{enumerate}
+\item Write PWDATA to Receive Buffer. Transition to Idle state.
+\item Set starting address register to PWDATA. Transition to Idle state.
+\item Set end address register to PWDATA. Transition to Idle state.
+\item Prepare to start transferring data from memory to Receive Buffer.
+  Transition to Write Memory state.
+\end{enumerate}
+
+In the Write Memory state, read requests are generated on the MemPort bus and
+received data is stored into the Receive Buffer. The Read and Read Memory states
+have similar functionality, but writes data from the Transmit Buffer either
+directly to the APB bus or to memory. In general, transfers of five 32-bit words
+or less are done via the APB, while larger transfers go via memory. This is
+however something that is specified in the SDK, not implemented in hardware.
+That means that the system can be implemented to run on platforms without
+on-board memory, as the MemPort interface can simply be tied off in that case.
+
+The ConveyApbBridge-module serves, as the name implies, as a bridge between the
+interfaces provided by the Convey PDK and the Communication module. The Dispatch
+interface drives the APB bus, while the Memory Controller interface is wired
+against the MemPort.
+
+
+\clearpage
+
 
 \section{Readout}
 

@@ -1,6 +1,7 @@
 %===================================== CHAP 4 =================================
 
 \chapter{Platform (?)}
+\label{chp:platform}
 
 In 2016, the long anticipated new hardware was finally installed and was ready
 to be used for the CARP project. The new machine contains four Convey Wolverine
@@ -14,6 +15,7 @@ toolchain used to synthesize the hardware design and finally the toolchain used
 for the software API.
 
 \section{Convey Wolverine WX-2000 Application Accelerator}
+\label{sec:coproc}
 
 The Convey Wolverine WX-2000 is a PCIe-mounted coprocessor equipped with a
 Xilinx Virtex-7 XC7V2000T FPGA and four DDR3 SO-DIMM slots allowing for up to 64
@@ -21,8 +23,11 @@ GB of on-chip memory. \figurename~\ref{fig:convey-wx-card} shows how a Wolverine
 coprocessor is organized at a high level. The host computer communicates with
 the card over PCIe at a max bandwidth of 8 GB/s. On the coprocessor, the Host
 Interface controller (HIX) is responsible for decoding the data sent from the
-host. Data can either be stored in the on-board memory, or passed directly to an
-the FPGA.
+host. Data can either be stored in the on-board memory, or passed directly to
+the FPGA. The FPGA is divided logically into Application Engines, the number of
+which can be configured at synthesis. This is the entrypoint into which a custom
+FPGA design is inserted. The Convey Personality Development Kit (PDK) provides
+each AE with interfaces to the HIX, the AEs memory controller and the other AEs.
 
 With 2 million logic cells, 46 MB of BRAM and up to 2.8 Tb/s serial bandwidth,
 the XC7V2000T is one of Xilinx' higher end FPGAs. Earlier, FPGAs have been
@@ -53,6 +58,7 @@ designs across multiple SLRs if needed.
 
 
 \section{Hardware Toolchain}
+\label{sec:hw-toolchain}
 
 All previous iterations of the CARP hardware platform have been implemented
 entirely in VHDL. At the start of this project, the decision was made to start
@@ -60,6 +66,7 @@ porting the codebase to Chisel, a hardware construction DSL implemented in the
 Scala programming language.
 
 \subsection{Chisel}
+\label{sec:chisel}
 
 Chisel\footnote{\url{https://chisel.eecs.berkeley.edu/}} is an open-source
 hardware construction language developed at UC Berkeley. Where many other
@@ -131,6 +138,7 @@ class Sample(w: Int) extends Module {
 \end{figure}
 
 \section{Software Toolchain}
+\label{sec:sw-toolchain}
 
 The software API is written in C, compiled on CentOS 6.5, Linux kernel version
 2.6.32-431 with GCC version 4.4.7. Outside of the C standard library, the API

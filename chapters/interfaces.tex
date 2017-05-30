@@ -1,0 +1,59 @@
+\chapter{Interface Specifications}
+\label{app:interfaces}
+
+\section{Advanced Peripheral Bus (APB)}
+
+APB is a bus specification by ARM designed for low bandwidth communication between register interfaces.
+Table~\ref{tbl:apb-signals} lists its constituent buses and signals.
+
+\begin{table}
+    \begin{tabular}{p{0.2\linewidth}|p{0.2\linewidth}|p{0.5\linewidth}}
+    \hline
+    Signal   & Source                 & Description                                                                                                                                                                                                                                                                       \\ \hline
+    \textbf{PCLK}     & Clock Source           & Clock. The rising edge of PCLK times all transfers on the APB.                                                                                                                                                                                                                    \\ \hline
+    \textbf{PRESETn}  & System bus equivalent  & Reset. The APB reset signal is active LOW. This signal is normally connected directly to the system bus reset signal.                                                                                                                                                            \\ \hline
+    \textbf{PADDR}    & APB bridge             & Address. This is the APB address bus. It can be up to 32 bits wide and is driven by the peripheral bus bridge unit.                                                                                                                                                               \\ \hline
+    \textbf{PPROT}    & APB bridge             & Protection type. This signal indicates the normal, privileged, or secure protection level of the transaction and whether the transaction is a data access or an instruction access.                                                                                               \\ \hline
+    \textbf{PSELx}    & APB bridge             & Select. The APB bridge unit generates this signal to each peripheral bus slave. It indicates that the slave device is selected and that a data transfer is required. There is a PSELx signal for each slave.                                                                      \\ \hline
+    \textbf{PENABLE}  & APB bridge             & Enable. This signal indicates the second and subsequent cycles of an APB transfer.                                                                                                                                                                                                \\ \hline
+    \textbf{PWRITE}   & APB bridge             & Direction. This signal indicates an APB write access when HIGH and an APB read access when LOW.                                                                                                                                                                                   \\ \hline
+    \textbf{PWDATA}   & APB bridge             & Write data. This bus is driven by the peripheral bus bridge unit during write cycles when PWRITE is HIGH. This bus can be up to 32 bits wide.                                                                                                                                     \\ \hline
+    \textbf{PSTRB}    & APB bridge             & Write strobes. This signal indicates which byte lanes to update during a write transfer. There is one write strobe for each eight bits of the write data bus. Therefore, PSTRB[n] corresponds to PWDATA[(8n + 7):(8n)]. Write strobes must not be active during a read transfer.  \\ \hline
+    \textbf{PREADY}   & Slave interface        & Ready. The slave uses this signal to extend an APB transfer.                                                                                                                                                                                                                      \\ \hline
+    \textbf{PRDATA}   & Slave interface        & Read Data. The selected slave drives this bus during read cycles when PWRITE is LOW. This bus can be up to 32-bits wide.                                                                                                                                                         \\ \hline
+    \textbf{PSLVERR}  & Slave interface        & This signal indicates a transfer failure. APB peripherals are not required to support the PSLVERR pin. This is true for both existing and new APB peripheral designs. Where a peripheral does not include this pin then the appropriate input to the APB bridge is tied LOW.      \\ \hline
+    \end{tabular}
+    \caption{Signals and buses in the Advanced Peripheral Bus protocol.}
+    \label{tbl:apb-signals}
+\end{table}
+
+\clearpage
+
+
+\section{MemPort Bus}
+
+The MemPort Bus is a generic memory interface with a request/response style
+protocol. It consists of two MemBuses wrapped in ready-valid interfaces, one for
+requests and one for responses. A MemBus has data, address and write enable fields.
+A full list of signals is given in table~\ref{tbl:memport-signals}.
+
+\begin{table}[H]
+    \begin{tabular}{p{0.2\linewidth}|p{0.2\linewidth}|p{0.5\linewidth}}
+    \hline
+    Signal          & Source    & Description                                                                        \\ \hline
+    \textbf{req\_addr}       & Requester & Request address.                                                                   \\ \hline
+    \textbf{req\_data}       & Requester & Request data. Only used for write requests.                                        \\ \hline
+    \textbf{req\_write}      & Requester & Request type. High for write, low for read.                                        \\ \hline
+    \textbf{req\_ready}      & Responder & Responder ready. Asserted by responder when it is ready to receive a new request.  \\ \hline
+    \textbf{req\_valid}      & Requester & Request valid. Asserted by requester when a new request is dispatched.             \\ \hline
+    \textbf{resp\_addr}      & Responder & Response Address.                                                                  \\ \hline
+    \textbf{resp\_data}      & Responder & Response data.                                                                     \\ \hline
+    \textbf{resp\_write}     & Responder & Response type.                                                                     \\ \hline
+    \textbf{resp\_ready}     & Requester & Requester ready. Asserted by requester when it is ready to receive a new response. \\ \hline
+    \textbf{resp\_valid}     & Responder & Responder valid. Asserted by responder when a new response is dispatched.          \\ \hline
+    \textbf{flush}           & Requester & Flush memory.                                                                      \\ \hline
+    \textbf{flush\_complete} & Responder & Flush complete.                                                                    \\ \hline
+    \end{tabular}
+    \caption{Signals and buses in the MemPort protocol.}
+    \label{tbl:memport-signals}
+\end{table}
