@@ -160,8 +160,29 @@ over generations in a population.
   }\label{fig:growth-rules}
 
 \end{figure}
+\clearpage
 
 \section{Reservoir Computing}
+
+\subsection{Spiking Neural Networks as Readout Layers}
+
+\todo{Rewrite}
+
+Artificial neural networks can be grouped into three generations, based on the characteristics of their base computational unit, the neuron.
+The first generation, based on McCulloch-Pitts neurons~\cite{McCulloch1943}, simple threshold gates, allows for universal computation on digital input/output values.
+In the second generation, neurons apply a non-linear, continuous activation function on the weighted sum of their inputs.
+
+The third generation of networks bases itself on spiking neurons, which model the interaction between biological neurons more closely.
+In this model, a neuron $v$ fires when its potential $P_v$ exceeds a threshold $\theta_v$.
+The potential is, at any time, the sum of the postsynaptic potentials, resulting from firing of presynaptic neurons.
+The contribution of a spike from presynaptic neuron $u$ at time $s$ to the potential $P_v$ of postsynaptic neuron $v$ is given by $w_{u,v} \cdot \varepsilon_{u,v}(t-s)$, where $w_{u,v}$ is a weight representing the strength of the synapse connecting $u$ and $v$, and $\epsilon_{u,v}(t-s)$ models the response of the spike as a function of time passed since the spike occurred.
+A synapse can be both excitatory and inhibitory, meaning that its contribution to the total potential $P_v$ can be both positive and negative.
+A biologically plausible response function is shown in figure~\ref{fig:response-function-snn}.
+From a machine learning perspective, the trainable part of a spiking neural network, is the weight $w_{u,v}$, determining to what degree spikes from a neuron $u$ influences the potential of neuron $v$.
+
+In~\cite{Maass1997}, Maass shows that spiking neurons are at least computationally equal to the models used in generation one and two, and that they can also be more efficient in terms of neurons required to compute a function.
+SNNs also have the required attributes to be used as a reservoir in an RC system~\cite{Pipa2010}.
+In order to be able to create an efficient implementation of a RC-machine based on a cellular developmental system as described in~\ref{sec:rc-machine}, being able to perform classification in the spiking domain is essential.
 
 \section{Related Work}
 \cleardoublepage

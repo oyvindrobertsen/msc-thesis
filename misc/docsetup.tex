@@ -51,6 +51,14 @@
     }%
  }
 
+\makeatletter
+\newcommand*{\bdiv}{%
+  \nonscript\mskip-\medmuskip\mkern5mu%
+  \mathbin{\operator@font div}\penalty900\mkern5mu%
+  \nonscript\mskip-\medmuskip
+}
+\makeatother
+
 \usepackage[toc, nonumberlist, acronym]{glossaries}
 \makeglossaries
 %\newglossary[abr]{abbr}{abt}{abl}{Abbreviations}
