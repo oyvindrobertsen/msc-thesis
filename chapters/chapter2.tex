@@ -5,20 +5,79 @@
 
 \section{Evolution}
 
-In nature, evolution is the process governing change in heritable properties
-over generations in a population.
+In nature, evolution is the process governing change and preservation of
+hereditary traits in populations of biological organisms. It allows species to
+adapt to their environment over generations through reproduction, variation and
+survival of the fittest \cite{Darwin1859}.
 
-\subsection{Basic, EA}
+Artificial evolution seeks to harness the powerful adaptive capabilities of
+natural evolution and apply them to general problem solving and learning. While
+research on the subject has branched into many different sub-areas, the general
+concept of optimizing a population of individuals with respect to some fitness
+function using mechanisms inspired by natural evolution, is referred to using
+the umbrella term Evolutionary Algorithm (EA) \cite{Holland1975}.
+
+One of the greatest strengths of EAs is how universally applicable they are. EAs
+have successfully been applied to many different problem domains, such as
+robotics \cite{Floreano2000}, bioinformatics \cite{KosakovskyPond2006},
+medicine \cite{Fitzgerald:2015:IAS:2739480.2754761} and many more.
 
 \subsection{Goldberg, GA}
 
+The most common type of EA is perhaps the Genetic Algorithm (GA) \cite{Goldberg:1989:GAS:534133}.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.5\linewidth]{fig/ga}
+  \caption{Genetic Algorithm process.}
+  \label{fig:ga}
+\end{figure}
+
+
+
 \subsection{Koza, Genetic programming}
+
+Genetic Programming (GP) is an area of research in artificial evolution aiming
+to program computers through evolution. Programs represented as tree structures
+are encoded as genotypes and evolved subject to some fitness function using a
+GA. By mutating genotypes through operations that preserve the 
 
 \section{Development}
 
-\subsection{Cellular Automata}
+Biological development is the natural process that allows complex multi-cellular
+organisms to be built starting from a single cell using instructions encoded in
+the DNA of the organism. The most easily recognizable example is the development
+of humans from a single cell, the zygote, containing the combined genetic
+material of the parents, through cell division and differentiation. The human
+genome does not contain an exhaustive description and blueprint of each
+individual human. Rather, it consists of instructions governing how cells should
+divide and differentiate based on their surrounding cells and feedback from the
+environment.
 
-\subsection{DS2 machine}
+Developmental processes in nature have many properties that make them desireable
+to mimic through artificial development. For instance, the number of cells in
+the human body is orders of magnitudes larger than the amount of information
+encoded in our DNA \cite{Bianconi2013}. In general, the performance of GAs and
+GP implementations decline as the size of the genome increases, as mutations are
+more likely to be detrimental with regards to fitness. By introducing
+development as an indirect mapping between genotype and phenotype, programs and
+structures that scale to arbitrary dimensions can be produced while still
+maintaining a search space that the EA method in question can efficiently
+explore. Systems that combine evolution and development in this way are often
+referred to as EvoDevo systems \cite{Hall2003}.
+
+Where evolution allows a species to adapt over the span of generations,
+development continues throughout the lifetime of each individual, allowing for
+adaption based on changes to the environment. This makes EvoDevo particularily
+well suited in the design of robust and environment-insensitive artificial
+intelligence agents.
+
+\section{Cellular Computation}
+
+Embryogenesis evolved to develop 3D structures from linear code, not to create
+Universal Turing Machines
+
+\subsection{Developmental Cellular Architectures}
 
 \tikzstyle{block} = [draw, fill=white!20, rectangle, 
     minimum height=2em, minimum width=5em]
@@ -186,3 +245,7 @@ In order to be able to create an efficient implementation of a RC-machine based 
 
 \section{Related Work}
 \cleardoublepage
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../thesis"
+%%% End:

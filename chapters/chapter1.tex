@@ -73,7 +73,7 @@ controlled by a program running on a host computer. Typically, the host program
 will implement the phylogenetic aspect of the system by evolving a population
 wherein each individual is a set of developmental rules. The CARP hardware is
 used to assess the fitness of each individual through development and simulation
-of the cellular organism.
+of the cellular organism. 
 
 Reservoir Computing (RC) is an exciting, new field of research within machine
 learning and intelligent systems. RC-systems work by imposing input data as
@@ -88,13 +88,15 @@ due to their very nature, it is often hard to formulate problems correctly and
 to interpret the dynamics of the system as answers to those problems. Combining
 the developmental, cellular architectures of the CARP system with the abstract
 computational concept of the RC paradigm will yield a more consistent framework
-for applying cellular computing to real-world problems. 
+for applying cellular computing to real-world problems.
 
-In this thesis, the CARP system has been extended to include a trainable
-readout-module based on spiking neural networks which processes the dynamic
-behavior of the cells in real-time. It has also been ported to run on new
-hardware and the codebase has been partially ported to Chisel, a hardware
-definition domain specific language implemented in Scala.
+In this thesis, the CARP system has been extended to include epigenetic aspects
+into the design and development of cellular architectures. This is done by
+adding a trainable readout-module based on spiking neural networks which
+processes the dynamic behavior of cells in real-time and feeding its output back
+into the cellular reservoir. The system has also been ported to run on new hardware and
+the codebase has been partially ported to Chisel, a hardware definition domain
+specific language implemented in Scala.
 
 \section{Outline}
 

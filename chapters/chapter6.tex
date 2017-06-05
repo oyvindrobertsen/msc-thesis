@@ -1,12 +1,15 @@
 %===================================== CHAP 5 =================================
 
 \chapter{Verification}
+\label{chp:verification}
 
 
 
 \section{Tests}
+\label{sec:test}
 
 \subsection{Unit Tests}
+\label{sec:unit-tests}
 
 In addition to generating Verilog, Chisel is also capable of producing
 cycle-accurate simulations of circuits in C++. The framework also provides tools
@@ -15,22 +18,25 @@ verify functionality and ensure interoperability with surrounding modules, tests
 have been written for all modules implemented entirely in Chisel. These include
 the InformationSender, Readout, SNNLAyer, Neuron, ReadoutSender and LUTWriter
 modules. Modules that blackbox VHDL modules, such as the new CA module, can not
-be simulated, as the C++ simulator does not support mixed-language simulation yet.
+be simulated in this way, as the C++ simulator does not support mixed-language
+simulation yet.
 
 \subsection{Functional Tests}
+\label{sec:functional-test}
 
 To verify the integrity of the platform as a whole, Lundal wrote a series of
 functional tests interacting with the hardware platform via the C API. These
 have been updated and extended to ensure compatibility with changed
 functionality. New tests have also been written to verify new functionality,
-focusing especially on the interaction between Readout and Cellular Automata
-modules works correctly.
+focusing especially on the interaction between the Readout and Cellular Automata
+modules.
 
 Tests have been ran for multiple configurations of the system, including
 for SBlock Matrices of different dimensions and Spiking Neural Networks with
 different topologies.
 
 \section{Example}
+\label{sec:selfreg-example}
 
 To showcase the functionality added to the system, the example organism in
 \figurename~\ref{fig:example-development} has been created. It uses 10 cell

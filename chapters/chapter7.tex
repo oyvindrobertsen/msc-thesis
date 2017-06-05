@@ -2,10 +2,49 @@
 
 \section{Science}
 
-\section{Porting}
+The proof of concept experiment in Section~\ref{sec:selfreg-example} gives a
+small glimpse into the possibilities opened up by adding the Readout module
+to the CARP system. While the example only showcases how processing the dynamics
+of the CA allows for adaption in the developmental process, more complex
+configurations would, hopefully, allow for cellular organisms that not only are
+capable of advanced computations, but that are able to adapt and learn from
+environmental feedback in ways not previously possible.
+
+\section{Resource Usage}
 
 
+As shown in Table~\ref{tbl:resource-usage}, the Virtex-7 FPGA on the Convey
+coprocessor gives the CARP system quite a bit of room to grow. A design with an
+SBlock Matrix with dimensions $96\times96 = 9216 cells$ uses $\approx 20\%$ of LUTs
+and $\approx 24\%$ of BRAMs available. In terms of flat quantities, the number
+of LUTs used has increased significantly in the new design. By comparing designs
+with similar SBlock Matrices, it becomes apparent that this is due to the added
+overhead of the Convey PDK Application Engine design into which the CARP design
+is placed.
 
+
+\renewcommand{\arraystretch}{1.2}
+\begin{table}[ht]
+  \centering
+  \begin{tabularx}{\linewidth}{X|X|X|X|X|X|X}
+    Cell Count & LUTs Total & LUTs \% & Registers Total & Registers \% & BRAMs Total & BRAMs \%\\
+    \hline
+    $8\times8$ & 194624 & 15.93 & 208690 & 8.54 & 227.5 & 18.91\\ 
+    \hline
+    $64\times64$ & 224442 & 18.37 & 221061 & 9.05 & 280.0 & 23.28\\
+    \hline
+    $72\times72$ & 230094 & 18.84 & 223355 & 9.14 & 286.5 & 23.82\\
+    \hline
+    $96\times96$ & 251219 & 20.56 & 231616 & 9.48 & 308.5 & 25.64\\
+    \hline
+    $4\times4\times4$ & 195360 & 15.99 & 209171 & 8.56 & 232.5 & 19.33\\
+    \hline
+    $16\times16\times16$ & 249320 & 20.41 & 218109 & 8.93 & 261 & 21.70\\
+  \end{tabularx}
+  \caption{FPGA Resource usage of the CARP system}\label{tbl:resource-usage}
+\end{table}
+
+\renewcommand{\arraystretch}{1}
 
 
 \section{Challenges}
@@ -36,6 +75,30 @@ but having a fragmented codebase is definitely less desirable in the long term.
 
 \section{Future Work}
 
+To further extend the platform along the epigenetic axis, it is necessary to
+allow for other inputs and perturbartions to the CA than the feedback from the
+Readout module. A possible solution would be to implement a generic type of
+InputCell that, similar to the FeedbackCell used in this thesis, has state
+determined entirely by an outside source. That outside source could potentially
+be a bitstream stored on the on-board memory on the Convey coprocessor.
 
+In the example presented in Section~\ref{sec:selfreg-example}, configuring the
+SNN in the Readout module was trivial to do by hand in order to illustrate the
+potential capabilities. In order to effectively utilize the Readout module in
+more advanced experiments, an efficient training algorithm will have to be
+implemented. In general, training spiking neural networks is a hard task. In the
+specialization project report in Appendix~\ref{app:spec-proj-report}, an
+evolutionary algorithm is used to guide a search through the space of possible
+network configurations. This technique is both slow and it does not converge
+reliably. A more efficient solution would be to implement a version of the
+SpikeProp algorithm \cite{Bohte2002} adapted to the simplified spiking neural
+networks modeled in the Readout module. Another possible approach is fully
+on-line training based on spike-timing-dependent plasticity \cite{Markram2012}.
+Here weight tuning happens locally inside each neuron, based on the timing of
+incoming spikes relative to when the neuron fires.
 
 \cleardoublepage
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../thesis"
+%%% End:
