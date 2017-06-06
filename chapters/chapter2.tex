@@ -15,9 +15,9 @@ natural evolution and apply them to general problem solving and learning. While
 research on the subject has branched into many different sub-areas, the general
 concept of optimizing a population of individuals with respect to some fitness
 function using mechanisms inspired by natural evolution, is referred to using
-the umbrella term Evolutionary Algorithm (EA) \cite{Holland1975}.
+the umbrella term Evolutionary Computation (EC) \cite{Back1997}.
 
-One of the greatest strengths of EAs is how universally applicable they are. EAs
+One of the greatest strengths of EC is how universally applicable it is. EAs
 have successfully been applied to many different problem domains, such as
 robotics \cite{Floreano2000}, bioinformatics \cite{KosakovskyPond2006},
 medicine \cite{Fitzgerald:2015:IAS:2739480.2754761} and many more.
@@ -69,15 +69,134 @@ referred to as EvoDevo systems \cite{Hall2003}.
 Where evolution allows a species to adapt over the span of generations,
 development continues throughout the lifetime of each individual, allowing for
 adaption based on changes to the environment. This makes EvoDevo particularily
-well suited in the design of robust and environment-insensitive artificial
-intelligence agents.
+well suited in the design of robust and adaptive artificial intelligence agents.
 
-\section{Cellular Computation}
+\section{Cellular Computing}
 
-Embryogenesis evolved to develop 3D structures from linear code, not to create
-Universal Turing Machines
+Most computing devices in use today have been developed on the foundation of the
+von Neumann architecture \cite{VonNeumann1993}, a single complex processor
+performing one complex task at a time. Recently, the field of cellular computing
+has seen growing interest. Cellular computing, as described by Sipper in
+\cite{Sipper1999}, is built on three principles: simplicity, vast parallelism
+and locality. It seeks to exploit emergent computational capabilities between
+large numbers of locally connected simple cells. Sipper presents cellular
+computing as an abstract framework, within which many variations of the paradigm
+can exist based on a number of properties. These include cell type (which types
+of values a cell can take; discrete or continuous), cell definition (how the
+behavior of cells is specified), cell mobility (wether or not cells can move
+within their environment), cell connectivity (how cells are connected to
+eachother; regular grid, (un)directed graph), topology of underlying environment
+(if any), connection lines (what information to transmit between connected
+cells), temporal dynamics (asynchronous vs. synchronous updating schemes),
+uniformity (in cell type and connectivity) and determinism. Some well known
+examples of paradigms that fit within the framework of cellular computing are
+Random Boolean Networks (RBNs) and Cellular Automata (CAs).
+
+\subsection{Cellular Automata}
+
+The most well known example of cellular computing is the Cellular Automaton
+(CA). Consisting of cells connected in a regular grid that transition between
+discrete states based on the states of the cells in their neighborhood
+\footnote{The von Neumann-neighborhood, consisting of cells directly north,
+east, south and west of a cell, is a common choice.}. While each cell is not
+capable of much on their own, the behavior emerging from interactions between
+cells can give rise to complex dynamics. \figurename~\ref{fig:ca-example} shows
+the behavior over eight timesteps of a simple, 1-dimensional, uniform CA
+starting from a single cell, with each time-step shown on a new line. The rule
+governing state transitions is shown in the boxes to the right in the figure.
+Each box gives the neighborhood conditions on the top row and the resulting
+state on the bottom.
+
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.6\linewidth]{fig/ca-example}
+  \caption{
+    Eight timesteps for a uniform 1-dimensional CA. The boxes to the right show
+    the rule with which the cells are configured, Rule 90.
+  }
+  \label{fig:ca-example}
+\end{figure}
+
+Research into the computational capabilities of CAs can be said to have started
+in the 1940s, with John von Neumann and Stanislaw Ulam designing a 2D CA capable
+of self-reproduction \cite{Sipper1999}. Moving forward, the dynamics and
+behavior of specific CA rules was examined in detail. For instance, the rule
+used in Game of Life, introduced by mathematician John Conway in 1982, was
+proven to be capable of universal computation \cite{Connelly1986}. Stephen
+Wolfram shifted focus from studying specific rules, to investigating
+characteristics of groups of rules, resulting in his classification of the CA
+rulespace:
+
+\begin{enumerate}
+  \item Rules leading to homogenous state for all cells. Regardless of the
+    initial configuration of the cells, they all converge to the same state
+    after a transient period.
+  \item Rules leading to stable or periodic structures.
+  \item Rules leading to chaotic patterns.
+  \item Rules leading to complex, long-lived structures. This is the only class
+    that contains non-trivial automata.
+\end{enumerate}
+
+Wolfram proposed that the rules capable of universal computation, such as Game
+of Life, reside in Class 4.
+
+\begin{equation}
+  \label{eqn:lambda}
+  \lambda = 1 - \frac{q}{tot}
+\end{equation}
+
+Like Wolfram, Christopher Langton has performed quantitative and qualitative
+studies of the CA rulespace \cite{Langton1990}. He hypothesized that it is more
+likely to find rules capable of complex computational behavior in regions of the
+rulespace where there is a phase transition between ordered and chaotic
+dynamics. He introduced the $\lambda$-parameter as a measure of heterogeneity
+for a rule. It is calculated, as shown in \ref{eqn:lambda}, where $q$ is the
+number of transitions in a rule that lead to a chosen quiescent, or dead, state,
+and $tot$ is the total number of transitions. For a CA with $N$ possible states
+and a neighborhood-size of $K$, the total number of transitions is $K^N$. A
+$\lambda$-value of $0$ indicates an entirely homogenous rule, where all possible
+neighborhood configurations result in a transition to the quiescent state.
+Maximally heterogenous rules will have a $\lambda$ of $1-1/N$.
+\figurename~\ref{fig:ca-classes} shows how Wolframs 4 classes map onto Langtons
+$\lambda$-space, with Class 4 coinciding with phase transition between ordered
+and chaos behavior, the so called Edge of Chaos.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.5\linewidth]{fig/ca-classes}
+  \caption{Wolframs rule classes mapped onto Langtons $\lambda$-space.}
+  \label{fig:ca-classes}
+\end{figure}
+
 
 \subsection{Developmental Cellular Architectures}
+
+One of the major challenges faced by cellular computing systems is how to
+program one. Manually programming the functionality and connectivity of each
+cell to achieve the desired emergent properties is both exceptionally
+time-consuming and hard to do when the problem to be solved involves global
+coordination. Sipper proposes to automate the programming of cellular systems
+through an adaptive process such as an EA. In \cite{Mitchell1993}, Mitchell et
+al. use a GA to evolve CA rules for solving problems requiring global
+coordination. Each individual is a bitstring representing the next-states for
+all possible neighborhood configurations. With a neighborhood size of 7, each
+genome is $2^7=128$ bits long yielding a search space size of $2^{128}$. The
+authors are able to successfully evolve CAs that solve the problems for which
+they where created.
+
+A different approach is taken by Sipper \cite{Sipper2004} in order to evolve
+non-uniform CAs. Where Mitchell et al. evolve a population of rules, doing this
+for a non-uniform CA would require an exceptionally large genome in order to
+specify the rule for each cell, increasing the search space exponentially,
+making it infeasible to search through using a standard GA. Sipper instead
+works with a single CA initialized with a random rule in each cell. The fitness
+of each cell is accumulated over some number of simulations of the CA starting
+from different initial state configurations, after which evolutionary mechanisms
+are applied in a local manner, between connected cells. Through this method,
+Sipper is able to evolve non-uniform CAs that outperform the uniform ones
+evolved by Mitchell et al. on the same tasks.
+
 
 \tikzstyle{block} = [draw, fill=white!20, rectangle, 
     minimum height=2em, minimum width=5em]
@@ -219,29 +338,117 @@ Universal Turing Machines
   }\label{fig:growth-rules}
 
 \end{figure}
+
+A third approach to the design of cellular computing systems is presented by
+Haddow and Tufte in \cite{Tufte2005a}. The authors use a developmental model to
+allow complex non-uniform CAs to grow from a single cell, as shown in
+\figurename~\ref{fig:dev-example}. Development occurs in discrete time steps, so
+called development steps (DS). Between each DS, a number of state steps (SS)
+occur, simulating the behavior of the organism developed so far as a CA. The
+rules governing the development process, the genome, take both cell type and
+state into consideration when deciding how to proceed. This means that the
+behavioral dynamics of the organism being developed regulates the developmental
+process. This type of coevolution of both structure and functionality is often
+referred to as dynamical systems with dynamical structure (DS)$^2$
+\cite{Spicher04atopological}.
+
 \clearpage
 
 \section{Reservoir Computing}
+
+Artificial Neural Networks (ANNs) are a commonly used computational model in
+machine learning and bio-inspired computing. Simple, feed forward ANNs lend
+themselves well to problems were data can be spatially correlated, such as
+classification. Many real world problems however, are temporal in nature.
+Recurrent neural networks (RNNs) have been shown to be powerful tools for
+solving temporal problems such as stock market prediction~\cite{Lawrence2001},
+learning context free/sensitive languages~\cite{Gers2001} and speech
+synthesis~\cite{Wu2016}. Training RNNs is computationally expensive and often
+requires application specific adaptions of generalized training algorithms in
+order to reliably converge~\cite{Hammer2002}. Several techniques have been
+proposed that circumvent problems related to training, such as Echo State
+Networks~\cite{Jaeger2001} (ESNs), Liquid State Machines~\cite{Maass2002} (LSMs)
+and Backpropagation Decorrelation learning~\cite{Steil2004}. These all share the
+common feature of only training weights of the output layer of the network,
+while leaving the hidden layers of the network untrained or simply subject to
+weight scaling. In~\cite{Verstraeten2007}, Verstraeten et al.\ propose that
+systems based on this idea should be unified under the term reservoir computing
+(RC).
+
+In general, reservoir computing as a term describes any computational system
+where a dynamic reservoir is excited by input data and output is generated by
+performing classification/regression over reservoir state.
+Figure~\ref{fig:rc-system} shows the basic architecture of any reservoir
+computing system. With its origins in research on various types of recurrent
+neural networks and training thereof, the reservoir in RC systems is often
+represented as an RNN~\cite{Verstraeten2007}. However, any dynamic system
+capable of eventually forgetting past perturbations and of responding distinctly
+to different perturbations, can in principle be used. Snyder et
+al.~\cite{Snyder2013} investigate using Random Boolean Networks, Yilmaz uses
+Cellular Automata~\cite{Yilmaz2014} and Fernando et al.\ use a bucket of
+water~\cite{Fernando2003}.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[auto, node distance=2cm,>=latex']
+    \node [block] (input) {Input};
+    \node [block, right of=input] (reservoir) {Reservoir};
+    \node [block, right of=reservoir] (readout) {Readout};
+    \node [block, below of=reservoir] (f) {$f(x)$};
+    \node [output, right of=readout] (output) {};
+
+    \draw [->] (input) -- (reservoir);
+    \draw [->] (reservoir) -- (readout);
+    \draw [->] (readout) -- node [name=out] {Output} (output);
+    \draw [->] (out) |- (f);
+    \draw [->] (f) -- (reservoir);
+  \end{tikzpicture}
+  \caption{Basic overview of an RC system.}
+\label{fig:rc-system}
+\end{figure}
+
+
 
 \subsection{Spiking Neural Networks as Readout Layers}
 
 \todo{Rewrite}
 
-Artificial neural networks can be grouped into three generations, based on the characteristics of their base computational unit, the neuron.
-The first generation, based on McCulloch-Pitts neurons~\cite{McCulloch1943}, simple threshold gates, allows for universal computation on digital input/output values.
-In the second generation, neurons apply a non-linear, continuous activation function on the weighted sum of their inputs.
+Artificial neural networks can be grouped into three generations, based on the
+characteristics of their base computational unit, the neuron. The first
+generation, based on McCulloch-Pitts neurons~\cite{McCulloch1943}, simple
+threshold gates, allows for universal computation on digital input/output
+values. In the second generation, neurons apply a non-linear, continuous
+activation function on the weighted sum of their inputs.
 
-The third generation of networks bases itself on spiking neurons, which model the interaction between biological neurons more closely.
-In this model, a neuron $v$ fires when its potential $P_v$ exceeds a threshold $\theta_v$.
-The potential is, at any time, the sum of the postsynaptic potentials, resulting from firing of presynaptic neurons.
-The contribution of a spike from presynaptic neuron $u$ at time $s$ to the potential $P_v$ of postsynaptic neuron $v$ is given by $w_{u,v} \cdot \varepsilon_{u,v}(t-s)$, where $w_{u,v}$ is a weight representing the strength of the synapse connecting $u$ and $v$, and $\epsilon_{u,v}(t-s)$ models the response of the spike as a function of time passed since the spike occurred.
-A synapse can be both excitatory and inhibitory, meaning that its contribution to the total potential $P_v$ can be both positive and negative.
-A biologically plausible response function is shown in figure~\ref{fig:response-function-snn}.
-From a machine learning perspective, the trainable part of a spiking neural network, is the weight $w_{u,v}$, determining to what degree spikes from a neuron $u$ influences the potential of neuron $v$.
+The third generation of networks bases itself on spiking neurons, which model
+the interaction between biological neurons more closely. In this model, a neuron
+$v$ fires when its potential $P_v$ exceeds a threshold $\theta_v$. The potential
+is, at any time, the sum of the postsynaptic potentials, resulting from firing
+of presynaptic neurons. The contribution of a spike from presynaptic neuron $u$
+at time $s$ to the potential $P_v$ of postsynaptic neuron $v$ is given by
+$w_{u,v} \cdot \varepsilon_{u,v}(t-s)$, where $w_{u,v}$ is a weight representing
+the strength of the synapse connecting $u$ and $v$, and $\epsilon_{u,v}(t-s)$
+models the response of the spike as a function of time passed since the spike
+occurred. A synapse can be both excitatory and inhibitory, meaning that its
+contribution to the total potential $P_v$ can be both positive and negative. A
+biologically plausible response function is shown in
+figure~\ref{fig:response-function-snn}. From a machine learning perspective, the
+trainable part of a spiking neural network, is the weight $w_{u,v}$, determining
+to what degree spikes from a neuron $u$ influences the potential of neuron $v$.
 
-In~\cite{Maass1997}, Maass shows that spiking neurons are at least computationally equal to the models used in generation one and two, and that they can also be more efficient in terms of neurons required to compute a function.
-SNNs also have the required attributes to be used as a reservoir in an RC system~\cite{Pipa2010}.
-In order to be able to create an efficient implementation of a RC-machine based on a cellular developmental system as described in~\ref{sec:rc-machine}, being able to perform classification in the spiking domain is essential.
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.5\linewidth]{fig/response-function-snn}
+  \caption{Common spike response function shape, figure taken from \cite{Maass1997}.}
+  \label{fig:response-function-snn}
+\end{figure}
+
+
+In~\cite{Maass1997}, Maass shows that spiking neurons are at least
+computationally equal to the models used in generation one and two, and that
+they can also be more efficient in terms of neurons required to compute a
+function.
+
 
 \section{Related Work}
 \cleardoublepage
