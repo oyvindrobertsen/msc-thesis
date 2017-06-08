@@ -3,7 +3,9 @@
 \chapter{Verification}
 \label{chp:verification}
 
-
+The functionality of the extended CARP platform has been verified through
+extensive testing, both through simulations and using the synthesised design
+running on the Convey coprocessor.
 
 \section{Tests}
 \label{sec:test}
@@ -28,7 +30,7 @@ To verify the integrity of the platform as a whole, Lundal wrote a series of
 functional tests interacting with the hardware platform via the C API. These
 have been updated and extended to ensure compatibility with changed
 functionality. New tests have also been written to verify new functionality,
-focusing especially on the interaction between the Readout and Cellular Automata
+focusing especially on the interaction between the Readout and Cellular Automaton
 modules.
 
 Tests have been ran for multiple configurations of the system, including
@@ -43,19 +45,22 @@ To showcase the functionality added to the system, the example organism in
 types and 19 development rules, and regulates its own growth through feedback
 from the readout layer.
 
-As shown in \figurename~\ref{fig:example-setup}, the platform is configured with
-an 8x8 matrix of cells. FeedbackCells are placed at coordinates (1, 1), (1, 5),
-(5, 1) and (5, 5), with the cells surrounding (1, 1) as output cells. The
+As shown in \figurename~\ref{fig:example-setup-ca}, the platform is configured
+with an 8x8 matrix of cells. FeedbackCells are placed at coordinates (1, 1), (1,
+5), (5, 1) and (5, 5), with the cells surrounding (1, 1) as output cells. The
 developmental rules are created to have the organism grow in spirals around the
 FeedbackCells. All cell types are associated with a LUT that sets their state to
 1 regardless of the state of neighbors. Between each development step, two state
 steps are performed. One to let the Readout module process the recently updated
 states, and one to update the state of the FeedbackCells update their state
-based on the output from the Readout module. When all cells around the
-FeedbackCells are grown into, the Readout module fires a spike. The development
-rules interpret this spike as a sign of overpopulation and kills the cells
-directly above, below, left and right of the FeedbackCells. The cells adjacent
-to these then die of starvation the next development step.
+based on the output from the Readout module. As shown in
+\figurename~\ref{fig:example-setup-readout}, the Readout module is configured
+with a single neuron that will fire once it has received spikes along all input
+edges. When all cells around the FeedbackCells are grown into, the Readout
+module fires a spike. The development rules interpret this spike as a sign of
+overpopulation and kills the cells directly above, below, left and right of the
+FeedbackCells. The cells adjacent to these then die of starvation the next
+development step.
 
 This example shows how the Readout module can be used to classify the behavioral
 dynamics of a cellular organism, and how that classification can be used to
@@ -63,18 +68,24 @@ regulate further growth and development.
 
 \begin{figure}[ht]
   \centering
-  \subfloat[
-  CA configuration used in creating a self-regulating organism. Green cells are
-  FeedbackCells, to which Readout output is routed, and blue cells are output
-  cells, regular SBlocks whose output state is routed as input to the Readout
-  module.
-  ]{\includegraphics[width=0.4\linewidth, valign=c]{fig/example-setup}}
-  \quad
-  \subfloat[
-  Configuration of the Readout module used in the example
-  self-regulating organism
-  ]{\includegraphics[width=\linewidth, valign=c]{fig/example-readout}}
-  \caption{\label{fig:example-setup}}
+  \includegraphics[width=0.4\linewidth]{fig/example-setup}
+  \caption{
+    CA configuration used in creating a self-regulating organism. Green cells
+    are FeedbackCells, to which Readout output is routed, and blue cells are output
+    cells, regular SBlocks whose output state is routed as input to the Readout
+    module.
+  }
+  \label{fig:example-setup-ca}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\linewidth]{fig/example-readout}
+  \caption{
+    Configuration of the Readout module used in the example
+    self-regulating organism
+  }
+  \label{fig:example-setup-readout}
 \end{figure}
 
 \begin{figure}[!ht]

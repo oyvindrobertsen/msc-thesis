@@ -1,7 +1,5 @@
 \chapter{Discussion}
 
-\section{Science}
-
 The proof of concept experiment in Section~\ref{sec:selfreg-example} gives a
 small glimpse into the possibilities opened up by adding the Readout module
 to the CARP system. While the example only showcases how processing the dynamics
@@ -11,7 +9,6 @@ capable of advanced computations, but that are able to adapt and learn from
 environmental feedback in ways not previously possible.
 
 \section{Resource Usage}
-
 
 As shown in Table~\ref{tbl:resource-usage}, the Virtex-7 FPGA on the Convey
 coprocessor gives the CARP system quite a bit of room to grow. A design with an
@@ -94,8 +91,9 @@ reliably. A more efficient solution would be to implement a version of the
 SpikeProp algorithm \cite{Bohte2002} adapted to the simplified spiking neural
 networks modeled in the Readout module. Another possible approach is fully
 on-line training based on spike-timing-dependent plasticity \cite{Markram2012}.
-Here weight tuning happens locally inside each neuron, based on the timing of
-incoming spikes relative to when the neuron fires.
+Here, weight tuning happens locally inside each neuron, based on the timing of
+incoming spikes relative to when the neuron fires. This approach is used in IBMs
+Truenorth computer \cite{6055293}, discussed in Section~\ref{sec:truenorth}.
 
 \cleardoublepage
 %%% Local Variables:

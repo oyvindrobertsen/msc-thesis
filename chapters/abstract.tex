@@ -1,24 +1,3 @@
-\clearpage
-\pagenumbering{roman} 				
-\setcounter{page}{1}
-
-\pagestyle{fancy}
-\fancyhf{}
-\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter.\ #1}{}}
-\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
-\renewcommand{\headrulewidth}{0.1ex}
-\renewcommand{\footrulewidth}{0.1ex}
-\fancyfoot[LE,RO]{\thepage}
-\fancypagestyle{plain}{\fancyhf{}\fancyfoot[LE,RO]{\thepage}\renewcommand{\headrulewidth}{0ex}}
-
-\section*{\Huge Sammendrag}
-\addcontentsline{toc}{chapter}{Sammendrag}	
-$\\[0.5cm]$
-
-\noindent sammendrag
-
-
-\cleardoublepage
 \pagenumbering{roman} 				
 \setcounter{page}{1}
 
@@ -35,9 +14,110 @@ $\\[0.5cm]$
 \addcontentsline{toc}{chapter}{Abstract}	
 $\\[0.5cm]$
 
-\noindent Overview
-\noindent Artificial development, CA as dynamical system
-\noindent Spec project, combine (DS)$^2$ with reservoir computing, spiking
-neural network.
-\noindent 
+
+As computer systems and networks grow in size and complexity, traditional
+top-down engineering techniques are quickly beckoming inadequate for achieving
+the desired results. Designing such systems that are robust and resilient, are
+able to adapt and self-regulate, can self-reproduce and learn autonomously is a
+tremendously hard task. These features are however present in many biological
+organism, wherein they emerge through evolution and development. In the fields
+of unconventional and biologically inspired computing, these techniques are used
+to create computing systems with the same type of complexity as that found in
+biological systems. Cellular Automata (CAs) is an example of a biologically
+inspired computing system that can achieve complex, global computation through
+local interaction between simple cells at a vast scale.
+
+While the computational capabilities of CAs have been researched extensively,
+they have not seen mainstream adaption as a computational paradigm.
+Programmability and encoding/decoding of input/output are two major challenges
+facing cellular computing systems. Manually specifying the functionality of each
+cell in such a way that the desired emergent global behavior of the CA as a
+whole is achieved, is infeasible for non-trivial systems. Problem input is
+usually encoded in the initial state of the system, and output is decoded from
+the state after the system has been simulated some amount of time.
+
+The Cellular Automata Research Platform (CARP) is an FPGA-based implementation
+of a developmental cellular architecture, aiming to facilitate research on use
+of artificial development and evolution to create cellular computing systems. At
+an abstract level, it implements a dynamical system with dynamical structure
+(DS)$^2$, a system for which both behavior and structure are emerging
+properties. Behavior influences further structural development and vice versa.
+
+In this thesis, the platform is extended to incorporate the developmental CA
+into a reservoir computing architecture. Reservoir computing (RC) is a novel
+approach to machine learning in which temporal input is imposed as perturbations
+on a dynamic reservoir and output is read out by performing a linear
+classification of the reservoir state some time after the initial perturbation.
+By combining RC and developmental CAs, the CARP system solves many of the issues
+relating to programming of and I/O encoding/decoding with cellular computing
+systems. It also opens up new possibilities for the developed organisms to adapt
+and learn based on their environment. The CARP platform has been extended with a
+reconfigurable readout layer implemented as a spiking neural network (SNN) that
+classifies the dynamics of the reservoir, the developmental CA. An SNN is chosen
+to allow the system operate entirely in the spiking domain, as input data and
+the dynamic behavior of the reservoir is already spiking in nature.
+
+The extended platform has been verified through extensive testing, both in
+simulation and end-to-end on actual hardware.
+
+
+\cleardoublepage
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\renewcommand{\headrulewidth}{0.1ex}
+\renewcommand{\footrulewidth}{0.1ex}
+\fancyfoot[LE,RO]{\thepage}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[LE,RO]{\thepage}\renewcommand{\headrulewidth}{0ex}}
+
+\section*{\Huge Sammendrag}
+\addcontentsline{toc}{chapter}{Sammendrag}	
+$\\[0.5cm]$
+
+Etter hvert som datasystemer og nettverk vokser i størrelse og kompleksitet, er
+tradisjonelle topp-ned teknikker raskt blitt utilstrekkelige for å oppnå de
+ønskede resultatene. Å designe robuste systemer som er i stand til
+å tilpasse seg og selvregulere, som kan selvreprodusere og lære autonomt er en
+utrolig vanskelig oppgave. Disse egenskapene er imidlertid tilstede i mange
+biologiske organismer, hvor de fremkommer gjennom evolusjon og utvikling. I
+forskningsområdene ukonvensjonell og biologisk inspirert databehandling brukes disse
+teknikkene til å lage beregningsarkitekturer med samme type kompleksitet som
+det som finnes i biologiske systemer. Cellulære Automata (CA) er et eksempel på
+et biologisk inspirert datasystem som kan oppnå komplisert, global beregning
+gjennom lokalt samspill mellom enkle celler i stor skala.
+
+Mens beregningsevnen til CAer har blitt forsket på over lengre tid, har de ikke
+blitt tatt i bruk som et beregningsmessig paradigme i stor skala.
+Programmerbarhet og koding/dekoding av data inn og ut er to store utfordringer
+for cellulære datasystemer. Manuell spesifisering av funksjonaliteten til hver
+celle på en slik måte at den ønskede fremtredende globale oppførselen til CAen
+som helhet oppnås, er praktisk ugjennomførbart for ikke-trivielle systemer.
+Input data til problemet er vanligvis kodet i systemets innledende tilstand, og
+data ut dekodes fra tilstanden etter at systemet har blitt simulert over tid.
+
+Cellular Automata Research Platform (CARP) er en FPGA-basert implementasjon av
+en cellulær arkitektur, med sikte på å fasilitere forskning på bruk av kunstig
+utvikling og evolusjon for å skape cellulære datasystemer. På et abstrakt nivå
+implementerer plattforment et dynamisk system med dynamisk struktur (DS)$^2$, et
+system hvor både oppførsel og struktur er fremvoksende egenskaper. Atferd
+påvirker videre strukturell utvikling og omvendt.
+
+I denne oppgaven blir plattformen utvidet til å inkorporere kunstig utviklede
+CAer i en reservoir computing arkitektur. Reservoir Computing (RC) er en ny tilnærming til
+maskinlæring hvor temporal inndata påføres som forstyrrelser på et dynamisk
+reservoar, og data leses ut ved å utføre en lineær klassifisering av
+reservoar-tilstanden en stund etter den første forstyrrelsen. Ved å kombinere RC
+og utviklings-CA, løser CARP-systemet mange av problemene knyttet til
+programmering av og I/O enkoding/dekoding av cellulare beregningsarkitekturer. Det
+åpner også nye muligheter for de utviklede strukturene til å tilpasse seg og
+lære basert på deres miljø. CARP-plattformen er utvidet med et rekonfigurerbart
+avlesingslag implementert som et spiking neural network (SNN) som
+klassifiserer dynamikken i reservoaret, en cellulær struktur under utvikling. En SNN er valgt for å
+tillate at systemet opererer helt i spiking-domenet, ettersom data inn og den
+dynamiske oppførelsen av reservoaret allerede er spikes.
+
+Den utvidede plattformen har blitt verifisert gjennom omfattende testing, både i
+simulering og ende-til-ende på faktisk maskinvare.
+
 \cleardoublepage

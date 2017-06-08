@@ -18,7 +18,7 @@ CA is implemented on the FPGA.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.6\linewidth]{fig/overview-general}
-  \caption[General system design]{General system design. Figure taken from \cite{Lundal2015a}.\label{fig:overview-general} }
+  \caption[General system design]{General system design. Figure reprinted from \cite{Lundal2015a}.\label{fig:overview-general} }
 \end{figure}
 
 %\section{Haddow \& Tufte}
@@ -30,13 +30,13 @@ CA is implemented on the FPGA.
 The original design of the CARP system was made by Djupdal in 2003
 \cite{Djupdal2003}, to support further research into elvolvable hardware based
 on the SBlock-architecture proposed by Tufte and Haddow \cite{Haddow2000a}. The
-system was implemented on a NallaTech BenERA FPGA-board communicating over
-\acrfull{pci} with a CompactPCI host-computer.
+system was implemented on a NallaTech BenERA FPGA-board communicating over a
+Parallell Component Interconnect (PCI) bus with a CompactPCI host-computer.
 
 \figurename~\ref{fig:overview-djupdal} shows the overall architecture of the
 resulting hardware platform. It consists of the SBlock Matrix (SBM), Block RAM
 (BRAM) for storing the state and type of each cell, a development unit, control
-logic, and a \acrshort{pci} communication unit.
+logic, and a PCI communication unit.
 
 \begin{figure}[!ht]
     \centering

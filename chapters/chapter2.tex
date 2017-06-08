@@ -1,9 +1,11 @@
 %===================================== CHAP 2 =================================
 
 \chapter{Background}
+\label{chp:background}
 
 
 \section{Evolution}
+\label{sec:evolution}
 
 In nature, evolution is the process governing change and preservation of
 hereditary traits in populations of biological organisms. It allows species to
@@ -17,14 +19,24 @@ concept of optimizing a population of individuals with respect to some fitness
 function using mechanisms inspired by natural evolution, is referred to using
 the umbrella term Evolutionary Computation (EC) \cite{Back1997}.
 
-One of the greatest strengths of EC is how universally applicable it is. EAs
-have successfully been applied to many different problem domains, such as
-robotics \cite{Floreano2000}, bioinformatics \cite{KosakovskyPond2006},
-medicine \cite{Fitzgerald:2015:IAS:2739480.2754761} and many more.
+One of the greatest strengths of EC is how universally applicable it is.
+Evolutionary algorithms have successfully been applied to many different problem
+domains, such as robotics \cite{Floreano2000}, bioinformatics
+\cite{KosakovskyPond2006}, medicine \cite{Fitzgerald:2015:IAS:2739480.2754761}
+and many more.
 
-\subsection{Goldberg, GA}
+\subsection{Genetic Algorithm}
 
-The most common type of EA is perhaps the Genetic Algorithm (GA) \cite{Goldberg:1989:GAS:534133}.
+The most common type of EA is the Genetic Algorithm (GA)
+\cite{Goldberg:1989:GAS:534133}. GAs use, as shown in \ref{fig:ga}, genetic
+operators such as mutation, crossover and selection to evolve a population of
+potential solutions to a problem, subject to some fitness function. The fitness
+function deems how fit an individual is, and thereby how likely it is to be
+selected for reproduction. It is a measure of how well the indivual performs as
+a solution to the problem at hand. The algorithm continues until an individual
+with a fitness higher than some predetermined threshold is found. Individuals
+are represented as genomes, commonly with a genotype encoded as a bitstring
+which serves as a blueprint to create the solution, the phenotype.
 
 \begin{figure}[ht]
   \centering
@@ -33,16 +45,19 @@ The most common type of EA is perhaps the Genetic Algorithm (GA) \cite{Goldberg:
   \label{fig:ga}
 \end{figure}
 
+\subsection{Genetic Programming}
 
+Genetic Programming (GP), introduced by John Koza \cite{Koza:1992:GPP:138936},
+is a technique attempting to automate the programming of computers. This is done
+by evolving a population of programs whose fitness is evaluated by executing
+them and comparing to the desired results. Programs are encoded in genotypes as
+tree structures, as opposed to as binary strings. This allows crossover and
+mutation operators to be implemented in such away that the resulting programs
+are structurally sound.
 
-\subsection{Koza, Genetic programming}
-
-Genetic Programming (GP) is an area of research in artificial evolution aiming
-to program computers through evolution. Programs represented as tree structures
-are encoded as genotypes and evolved subject to some fitness function using a
-GA. By mutating genotypes through operations that preserve the 
 
 \section{Development}
+\label{sec:development}
 
 Biological development is the natural process that allows complex multi-cellular
 organisms to be built starting from a single cell using instructions encoded in
@@ -73,6 +88,7 @@ particularily well suited in the design of robust and adaptive artificial
 intelligence agents.
 
 \section{Cellular Computing}
+\label{sec:cellular-computing}
 
 Most computing devices in use today have been developed on the foundation of the
 von Neumann architecture \cite{VonNeumann1993}, a single complex processor
@@ -353,12 +369,28 @@ process. This type of coevolution of both structure and functionality is often
 referred to as dynamical systems with dynamical structure (DS)$^2$
 \cite{Spicher04atopological}.
 
+While the three approaches to programming of cellular computating systems
+outlined above achieve positive results, the task is still hard. In the case
+with the developmental approach taken by Tufte, creating developmental rules is
+as difficult as manually specifying type and functionality for each cell.
+Combining development with evolution is possible \cite{7008733}, but the genome
+size needed to express all regulatory possibilities in the genome is so large
+that the resulting size of the search space makes it hard for the EA to reliably
+converge. There is in other words still a ways to go before programming of
+cellular computing systems can be considered a solved problem.
 
-\todo{still difficult, RC as solution to IO problem.}
-
-\clearpage
+Another challenge faced by such systems is how to formulate problems and
+encode/decode their inputs and outputs. In the works by Sipper and Mitchell,
+problem input is encoded as the initial state of the CA, and the output is
+interpreted from the state of cells after a number of state steps. This approach
+takes away from the generality of cellular systems, as an evolved/developed
+system will only be able to work specifically for the problem and encoding
+scheme it was initially designed around. Adapting a system to apply to different
+problems or to slight variations in input encoding will almost always require it
+to be developed from scratch.
 
 \section{Reservoir Computing}
+\label{sec:reservoir-computing}
 
 Artificial Neural Networks (ANNs) are a commonly used computational model in
 machine learning and bio-inspired computing. Simple, feed forward ANNs lend
@@ -411,11 +443,30 @@ water~\cite{Fernando2003}.
 \label{fig:rc-system}
 \end{figure}
 
+As outlined in Section~\ref{sec:cellular-computing} cellular computing systems
+are capable of complex, vast parallell computing. Combined with artificial
+development they are also highly adaptive. In this thesis we combine reservoir
+computing and developmental cellular automata in an attempt to provide a
+framework allowing for easier use and development of cellular systems.
+\figurename~\ref{fig:rc-dev-ca} shows how input data perturbs the behavioral
+part of the reservoir, the emerging CA, and output is extracted by using the
+readout layer to classify the dynamics in the CA. RC systems provide a layer of
+abstraction between I/O encoding/decoding and the computation occurring in the
+CA. With this approach the goal of development and evolution is not to create a
+CA configuration that is able to solve a specific problem under specific I/O
+conditions, but rather to develop CAs with strong general computation
+capabilities and strong ability to adapt to different input perturbations. A CA
+that is general enough, could be used in many different contexts simply by
+swapping out the readout layer.
 
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.6\linewidth]{fig/rc-dev-ca}
+  \caption{RC system with developmental cellular reservoir.}
+  \label{fig:rc-dev-ca}
+\end{figure}
 
 \subsection{Spiking Neural Networks as Readout Layers}
-
-\todo{Rewrite}
 
 Artificial neural networks can be grouped into three generations, based on the
 characteristics of their base computational unit, the neuron. The first
@@ -448,13 +499,69 @@ to what degree spikes from a neuron $u$ influences the potential of neuron $v$.
 \end{figure}
 
 
-In~\cite{Maass1997}, Maass shows that spiking neurons are at least
-computationally equal to the models used in generation one and two, and that
-they can also be more efficient in terms of neurons required to compute a
-function.
+Spiking Neural Networks (SNNs) are of particular interest in the context of a cellular
+RC system, where the reservoir dynamics are spiking in nature (i.e. a cell can
+be either alive or dead). By using a spiking neural network as a readout layer,
+data can flow through the RC-system as spikes from end to end. In the
+specialization project leading up to this thesis, experiments to examine the
+viability of SNNs as readout layers in RC system were carried out with successful
+results (see Appendix~\ref{app:spec-proj-report}).
 
 
 \section{Related Work}
+\label{sec:related-work}
+
+\subsection{IBM Truenorth}
+\label{sec:truenorth}
+
+The IBM Truenorth is a modular, non-von Neumann, ultra-low power computer
+simulating a massive network of biologically plausible spiking
+neurons~\footnote{\url{http://www.research.ibm.com/articles/brain-chip.shtml}}.
+It consists of 4096 neurosynaptic cores, each simulating 256 neurons and
+$256\times256$ synapses, resulting in a total of 1 million neurons being
+simulated. The cores are connected using an on-chip mesh network, allowing the
+core-count to be scaled without adding extra circuitry. During operation the
+platform consumes $< 100$ mW and is capable of 46 billion synaptic operations
+per second, per watt.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.6\linewidth]{fig/truenorth-arch}
+  \caption{Conceptual architecture of a neurosynaptic core used in the TrueNorth
+  chip. Reprint from \cite{Preissl2012}.}
+  \label{fig:truenorth-arch}
+\end{figure}
+
+IBM has implemented an ecosystem of algorithms, libraries, simulators, a
+programming language and an integrated development environment to support the
+platform. Several applications for the chip has also been developed, such as a
+multi-object detection and classification system operating on $240\times400$
+pixel, 3-color video input at 30 frames per second.
+
+\subsection{Tensor Processing Unit}
+
+To accelerate training and utilization of machine learning models implemented
+using their TensorFlow\footnote{\url{https://www.tensorflow.org/}}, Google have
+designed an Application Specific Integrated Circuit (ASIC), the Tensor
+Processing Unit (TPU)\cite{Jouppi2017}. Designed to provide exceptionally fast
+matrix mutliplication, the TPU is built around a Matrix Multiply Unit (MMU)
+capable of $2^{16}$ 8-bit multiply-and-add operations on signed/unsigned
+integers per cycle. The rest of the logic on the chip is dedicated to moving and
+organising data in such a way that the MMU is maximally utilized.
+
+When compared with its contemporary CPU and GPU competitors, the TPU operates
+approximately 15-30x faster, and with 30-80x higher TeraOps/Watt.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.8\linewidth]{fig/tpu-img}
+  \caption[The Google Tensor Processing Unit]{The Google Tensor Processing Unit. Reprinted from \footnotemark}
+  \label{fig:tpu-arch}
+\end{figure}
+
+\footnotetext{\href{https://cloudplatform.googleblog.com/2016/05/Google-supercharges-machine-learning-tasks-with-custom-chip.html}{\texttt{https://cloudplatform.googleblog.com}}}
+
+
 \cleardoublepage
 %%% Local Variables:
 %%% mode: latex

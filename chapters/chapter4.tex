@@ -77,8 +77,8 @@ computational tools in Scala to describe how a circuit should be wired.
 Leveraging Scalas typesystem and functional programming tools, Chisel encourages
 code reuse, genericity and designing systems that are highly parameterizable.
 
-Listing \ref{lst:chisel-sample} shows how to implement the circuit in
-\figurename~\ref{fig:chisel-sample}. The \texttt{io} bundle defines the inputs
+Listing \ref{lst:chisel-sample-source} shows how to implement the circuit in
+\figurename~\ref{fig:chisel-sample-circuit}. The \texttt{io} bundle defines the inputs
 and outputs of the module. In this case a boolean input signal and three
 unsigned integer signals, two inputs and an output, all of whose bitwidth is
 determined by the \texttt{w} parameter passed to the module when it is
@@ -105,7 +105,7 @@ For further details regarding the development setup for the hardware part of the
 CARP project, see Appendix \ref{app:readme}.
 
 \begin{figure}
-\begin{mintedsubfloat}[Chisel source \label{lst:chisel-sample}]{0.5\linewidth}
+\begin{mintedsubfloat}[Chisel source \label{lst:chisel-sample-source}]{0.5\linewidth}
 \begin{minted}[fontsize=\footnotesize]{scala}
 import chisel._
 
@@ -128,7 +128,9 @@ class Sample(w: Int) extends Module {
 } 
 \end{minted} 
 \end{mintedsubfloat}
-\subfloat[Circuit \label{fig:chisel-sample}]{\includegraphics[width=0.5\linewidth, valign=c]{fig/chisel-sample}}
+\subfloat[Circuit \label{fig:chisel-sample-circuit}]{\includegraphics[width=0.5\linewidth, valign=c]{fig/chisel-sample}}
+\caption{Chisel source and corresponding circuit.}
+\label{fig:chisel-sample}
 \end{figure}
 
 \begin{figure}[ht]
