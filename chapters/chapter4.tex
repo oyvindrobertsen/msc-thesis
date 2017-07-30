@@ -21,36 +21,37 @@ The Convey Wolverine WX-2000 is a PCIe-mounted coprocessor equipped with a
 Xilinx Virtex-7 XC7V2000T FPGA and four DDR3 SO-DIMM slots allowing for up to 64
 GB of on-chip memory. \figurename~\ref{fig:convey-wx-card} shows how a Wolverine
 coprocessor is organized at a high level. The host computer communicates with
-the card over PCIe at a max bandwidth of 8 GB/s. On the coprocessor, the Host
-Interface controller (HIX) is responsible for decoding the data sent from the
-host. Data can either be stored in the on-board memory, or passed directly to
-the FPGA. The FPGA is divided logically into Application Engines, the number of
-which can be configured at synthesis. This is the entrypoint into which a custom
-FPGA design is inserted. The Convey Personality Development Kit (PDK) provides
-each AE with interfaces to the HIX, the AEs memory controller and the other AEs.
+the card over a Peripheral Component Interconnect Express (PCIe) bus at a max
+bandwidth of 8 GB/s. On the coprocessor, the Host Interface controller (HIX) is
+responsible for decoding the data sent from the host. Data can either be stored
+in the on-board memory, or passed directly to the FPGA. The FPGA is divided
+logically into Application Engines, the number of which can be configured before
+synthesis. This is the entrypoint into which a custom FPGA design is inserted.
+The Convey Personality Development Kit (PDK) provides each AE with interfaces to
+the HIX, the AEs memory controller and the other AEs.
 
 With 2 million logic cells, 46 MB of BRAM and up to 2.8 Tb/s serial bandwidth,
 the XC7V2000T is one of Xilinx' higher end FPGAs. Earlier, FPGAs have been
-scaled monolithically following Moore's Law \todo{reference}, in the same way
-conventional processors have been scaled. With the XC7V2000T however, Xilinx has
-opted to combine 4 separate dies into one large virtual FPGA with their Stacked
-Silicon Interconnect (SSI) technology \cite{Saban2011}. Each die, or Super Logic
-Region (SLR), has its own clocking and configuration circuitry. For monolithic
-designs, these signals would have to be routed throughout the entire die in
-complex ways to avoid critical paths that are too long. With this circuitry
-replicated in each SLR, the resources required for routing clocking and
-configuration signals is significantly lower, opening up the possibility to use
-these resources to interconnect the SLRs instead. This, along with advances in
-manifacturing techniques has allowed Xilinx to scale their FPGAs even further
-and opening up new use cases for them. Programming FPGAs using SSI is no
-different from any other FPGA, the Xilinx design flow toolchain distributes
-designs across multiple SLRs if needed.
+scaled monolithically following Moore's Law, in the same way conventional
+processors have been scaled. With the XC7V2000T however, Xilinx has opted to
+combine 4 separate dies into one large virtual FPGA with their Stacked Silicon
+Interconnect (SSI) technology \cite{Saban2011}. Each die, or Super Logic Region
+(SLR), has its own clocking and configuration circuitry. For monolithic designs,
+these signals would have to be routed throughout the entire die in complex ways
+to avoid critical paths that are too long. With this circuitry replicated in
+each SLR, the resources required for routing clocking and configuration signals
+is significantly lower, opening up the possibility to use these resources to
+interconnect the SLRs instead. This, along with advances in manifacturing
+techniques has allowed Xilinx to scale their FPGAs even further and opening up
+new use cases for them. Programming FPGAs using SSI is no different from any
+other FPGA. The Xilinx design flow toolchain distributes designs across multiple
+SLRs if needed.
 
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\linewidth]{fig/convey-wx-card}
-  \caption{
+  \caption[Convey Wolverine Accelerator architecture]{
     High level overview of the Convey Wolverine Accelerator architecture.
     \label{fig:convey-wx-card}
   }
@@ -78,13 +79,12 @@ Leveraging Scalas typesystem and functional programming tools, Chisel encourages
 code reuse, genericity and designing systems that are highly parameterizable.
 
 Listing \ref{lst:chisel-sample-source} shows how to implement the circuit in
-\figurename~\ref{fig:chisel-sample-circuit}. The \texttt{io} bundle defines the inputs
-and outputs of the module. In this case a boolean input signal and three
+\figurename~\ref{fig:chisel-sample-circuit}. The \texttt{io} bundle defines the
+inputs and outputs of the module. In this case a boolean input signal and three
 unsigned integer signals, two inputs and an output, all of whose bitwidth is
 determined by the \texttt{w} parameter passed to the module when it is
-instantiated, i.e. \mintinline{scala}|val s = Module(new Sample(32))| will
-create an instance of the \texttt{Sample} module with 32-bit wide
-\texttt{UInt}s.
+instantiated. \mintinline{scala}|val s = Module(new Sample(32))| will create an
+instance of the \texttt{Sample} module with 32-bit wide \texttt{UInt}s.
 
 When executed, a Chisel program creates a internal graph representation of the
 circuit described by the program. Depending on the parameters given to the
@@ -94,7 +94,7 @@ incorporated into an FPGA design flow.
 
 To avoid having to start entirely from scratch, it was decided that porting the
 CARP hardware platform to Chisel would be done in a top-down fashion. That is,
-starting by instantiating Lundals toplevel module as a blackbox in the Chisel
+starting by instantiating Lundal's toplevel module as a blackbox in the Chisel
 design and implement downward in the module hierarchy as needed when extending
 the functionality of the platform. \figurename~\ref{fig:hw-build-process} gives
 an overview of the build process. All parameterization is gathered in the Chisel
@@ -129,14 +129,14 @@ class Sample(w: Int) extends Module {
 \end{minted} 
 \end{mintedsubfloat}
 \subfloat[Circuit \label{fig:chisel-sample-circuit}]{\includegraphics[width=0.5\linewidth, valign=c]{fig/chisel-sample}}
-\caption{Chisel source and corresponding circuit.}
+\caption[Chisel source and corresponding circuit]{Chisel source and corresponding circuit.}
 \label{fig:chisel-sample}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\linewidth]{fig/hardware-build-process}
-  \caption{Build process overview.\label{fig:hw-build-process} }
+  \caption[Build process overview]{Build process overview.\label{fig:hw-build-process} }
 \end{figure}
 
 \section{Software Toolchain}

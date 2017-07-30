@@ -18,7 +18,7 @@ cycle-accurate simulations of circuits in C++. The framework also provides tools
 necessary for writing module-level unit tests that target these simulations. To
 verify functionality and ensure interoperability with surrounding modules, tests
 have been written for all modules implemented entirely in Chisel. These include
-the InformationSender, Readout, SNNLAyer, Neuron, ReadoutSender and LUTWriter
+the InformationSender, Readout, SNNLayer, Neuron, ReadoutSender and LUTWriter
 modules. Modules that blackbox VHDL modules, such as the new CA module, can not
 be simulated in this way, as the C++ simulator does not support mixed-language
 simulation yet.
@@ -69,7 +69,7 @@ regulate further growth and development.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.4\linewidth]{fig/example-setup}
-  \caption{
+  \caption[Example CA configuration]{
     CA configuration used in creating a self-regulating organism. Green cells
     are FeedbackCells, to which Readout output is routed, and blue cells are output
     cells, regular SBlocks whose output state is routed as input to the Readout
@@ -81,7 +81,7 @@ regulate further growth and development.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\linewidth]{fig/example-readout}
-  \caption{
+  \caption[Example Readout configuration]{
     Configuration of the Readout module used in the example
     self-regulating organism
   }
@@ -136,7 +136,7 @@ regulate further growth and development.
   \quad
   \subfloat[Step 20]{\includegraphics[width=0.30\linewidth]{fig/selfregulating/20}}
   \quad
-  \caption{
+  \caption[Self-regulating developing organism]{
     Development steps of a self-regulating cellular organism simulated on
     the CARP platform. At steps 9 and 19, the Readout module classifies the
     organism as overpopulated. The next development step, the organism reacts to

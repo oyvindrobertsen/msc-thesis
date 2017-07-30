@@ -12,7 +12,7 @@ environmental feedback in ways not previously possible.
 
 As shown in Table~\ref{tbl:resource-usage}, the Virtex-7 FPGA on the Convey
 coprocessor gives the CARP system quite a bit of room to grow. A design with an
-SBlock Matrix with dimensions $96\times96 = 9216 cells$ uses $\sim 20\%$ of LUTs
+SBlock Matrix with dimensions $96\times96 = 9216$ cells uses $\sim 20\%$ of LUTs
 and $\sim 24\%$ of BRAMs available. In terms of flat quantities, the number
 of LUTs used has increased significantly in the new design. By comparing designs
 with similar SBlock Matrices, it becomes apparent that this is due to the added
@@ -47,8 +47,8 @@ is placed.
 \section{Challenges}
 
 During testing, it was discovered that the Xilinx FPGA flow crashes during
-synthesis of large SBlock Matrices. A 1x96x96 large design completes without
-problems, a 1x128x128 design however stalls while synthesising SBlocks and
+synthesis of large SBlock Matrices. A $96\times96$ large design completes without
+problems, a $128\times128$ design however stalls while synthesising SBlocks and
 receives a segmentation fault after a few hours. Due to time constraints and the
 fact that this issue did not hinder the implementation of new functionality, it
 has not been investigated thoroughly. To fully utilize the resources available on the

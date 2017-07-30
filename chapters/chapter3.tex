@@ -75,7 +75,7 @@ or in batches, writing only the final set of states back.
 
 \section{Aamodt}
 
-In Djupdals design it was necessary to transfer cell states to the host to
+In Djupdal's design it was necessary to transfer cell states to the host to
 calculate fitness. To avoid this bottleneck, Aamodt extended the system with an
 on-board fitness module in 2005 \cite{Aamodt2005}. Additionally, to gain further
 insight into the development process, he added logging-modules for the
@@ -97,7 +97,7 @@ fitness function and the two logging modules from the development unit.
 \end{figure}
 
 The two BRAMs added to the development module logs information regarding the
-development process. The Development Step BRAM stores wich rules were triggered
+development process. The Development Step BRAM stores which rules were triggered
 for all cells during the most recent development step, while the Rule Vector
 BRAM stores which rules were triggered overall for the last 256 development
 steps. The RSF is a large adder tree, calculating the total number of live cells
@@ -152,7 +152,7 @@ scratch, a job undertaken by Lundal in 2015 \cite{Lundal2015a}.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\linewidth]{fig/lundal-implementation-simple}
-  \caption{
+  \caption[Lundal's hardware design]{
     Overview of the reorganized hardware platform as implemented by Lundal.
     Figure taken from \cite{Lundal2015a}. \label{fig:lundal-implementation-simple}
   }
@@ -160,16 +160,16 @@ scratch, a job undertaken by Lundal in 2015 \cite{Lundal2015a}.
 
 Through his work, Lundal focused on making the hardware platform more modular,
 easier to configure and coherently structured. All dependencies on specific
-hardware features have been removed in favor of letting the synthesizer infer
-based on which resources are available on the targeted chipset. Support for both
-2D and 3D SBMs was implemented by Aamodt as two separate designs. Lundal unified
+hardware features were removed in favor of letting the synthesizer infer based
+on which resources are available on the targeted chipset. Support for both 2D
+and 3D SBMs was implemented by Aamodt as two separate designs. Lundal unified
 this into one design, utilizing the fact that all 2D CAs can be implemented as
 one-high 3D CAs. The software API was also made more complete and user-friendly,
 by implementing abstractions that allow the end user to focus more on the code
 related to the experiment being performed and less on the technicalities
 necessary to operate the hardware platform.
 
-Since Djupdals original design, the development module has remained largely
+Since Djupdal's original design, the development module has remained largely
 unchanged, implementing a developmental model based on research by Haddow and
 Tufte \cite{Tufte2005a}. In this model two types of developmental rules are
 considered; growth-rules indicating how an organism develops spatially, and

@@ -15,7 +15,7 @@ gluing all the modules together is all done in Chisel.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\linewidth]{fig/architecture-overview}
-  \caption{
+  \caption[CARP architecture extended with a readout layer]{
     Block diagram of the CARP hardware architecture extended with a readout layer.
   }
   \label{fig:architecture-overview}
@@ -23,7 +23,7 @@ gluing all the modules together is all done in Chisel.
 
 \begin{sidewaysfigure}[ht]
     \includegraphics[width=\textwidth]{fig/architecture-detail}
-    \caption{
+    \caption[Detailed system architecture diagram]{
       Modified reprint from~\cite{Lundal2015a} showing a detailed overview of
       the CARP architecture and its constituent modules. Modules annotated with a C in
       the upper right corner are implemented in / have been ported to Chisel, while
@@ -81,7 +81,7 @@ utilize these interfaces for data transfer.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\linewidth]{fig/convey-ae-io-overview}
-  \caption{Overview of the Convey Application Engine architecture.}
+  \caption[Convey Application Engine architecture]{Overview of the Convey Application Engine architecture.}
   \label{fig:convey-ae-io-overview}
 \end{figure}
 
@@ -102,14 +102,14 @@ become obsolete or defunct.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\linewidth]{fig/convey-io-carp-overview}
-  \caption{Implementation of the CARP platform within the AE architecture.}
+  \caption[CARP platform implemented in the AE architecture]{Implementation of the CARP platform within the AE architecture.}
   \label{fig:convey-io-carp-overivew}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\linewidth]{fig/comm-io}
-  \caption{
+  \caption[Communication module]{
     The communication module interfaces with the CARP platform through two
     buffers, transmit and receive. Outwards, the communication module exposes two
     buses, an APB bus and a generic memory interface.
@@ -126,7 +126,7 @@ counter registers and ready-valid access interfaces.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.5\linewidth]{fig/comm-fsm}
-  \caption{State machine controlling the communication module.}
+  \caption[Communication module state machine]{State machine controlling the communication module.}
   \label{fig:comm-fsm}
 \end{figure}
 
@@ -179,7 +179,7 @@ back to the host.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\linewidth]{fig/readout-io}
-  \caption{Logical overview of the Readout module.}
+  \caption[Readout module]{Logical overview of the Readout module.}
   \label{fig:readout-io}
 \end{figure}
 
@@ -194,7 +194,7 @@ next layer to be used as input to those neurons in the next step.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\linewidth]{fig/readout-layer}
-  \caption{Logical overiew of one network layer in the Readout module.}
+  \caption[Network Layer]{Logical overiew of one network layer in the Readout module.}
   \label{fig:readout-layer}
 \end{figure}
 
@@ -210,7 +210,7 @@ are reset.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\linewidth]{fig/readout-neuron}
-  \caption{Logical overview of a single neuron in the Readout module.}
+  \caption[Neuron]{Logical overview of a single neuron in the Readout module.}
   \label{fig:readout-neuron}
 \end{figure}
 
@@ -232,7 +232,7 @@ at synthesis time. The weights however, can be reconfigured while the system is
 running. This allows for rapid exploration of networks with different
 characteristics. The transition to the Configuration state is triggered when the
 Readout module receives a WriteWeight instruction from the Decode module.
-Accompanying the instruction is payload consisting of a 16-bit address and an
+Accompanying the instruction is a payload consisting of a 16-bit address and an
 8-bit weight value. \figurename~\ref{fig:readout-addressing-scheme} shows an
 example of how edges and their corresponding weight registers are addressed,
 starting from address 0 in the top left, increasing top to bottom between the CA
@@ -253,7 +253,7 @@ which will then contain the new weight value the subsequent clock cycle.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.6\linewidth]{fig/readout-addressing-scheme}
-  \caption{Example of how edges/weights are addressed counting from left to right, top to bottom.}
+  \caption[Weight addressing scheme]{Example of how edges/weights are addressed counting from left to right, top to bottom.}
   \label{fig:readout-addressing-scheme}
 \end{figure}
 
@@ -283,7 +283,7 @@ Live Count related modules remain unchanged and are still implemented in VHDL.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\linewidth]{fig/ca-io}
-  \caption{The Cellular Automaton module and surrounding modules.}
+  \caption[Cellular Automaton Module]{The Cellular Automaton module and surrounding modules.}
   \label{fig:ca-io}
 \end{figure}
 
@@ -297,7 +297,7 @@ output from the Readout module as input and updates its state with this value.
 Both are shown in \figurename~\ref{fig:ca-celltypes}. State updates happen
 synchronously throughout the matrix, all cells march in step so to speak. At
 synthesis time, the SBlock Matrix utilizes two lists of coordinates, one
-indicating which cells should be FeebackCells, and one indicating which cells'
+indicating which cells should be FeedbackCells, and one indicating which cells'
 states should be routed out of the module to be wired as input to the Readout
 module. All cells not in the FeedbackCells list will be instantiated as SBlocks.
 
@@ -305,7 +305,7 @@ module. All cells not in the FeedbackCells list will be instantiated as SBlocks.
   \subfloat[SBlock \label{fig:sblock}]{\includegraphics[width=0.45\linewidth]{fig/sblock}}
   \qquad
   \subfloat[FeedbackCell \label{fig:feedbackcell}]{\includegraphics[width=0.45\linewidth]{fig/feedbackcell}}
-  \caption{
+  \caption[Cellular Automaton FeedbackCells]{
     Detailed view of the SBlock and FeedbackCell modules used in the
     SBlock Matrix.\label{fig:ca-celltypes}
   }
@@ -334,7 +334,7 @@ states it has received.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\linewidth]{fig/ca-fsm}
-  \caption{State machine controlling the operation of the CA module.}
+  \caption[CA state machine]{State machine controlling the operation of the CA module.}
   \label{fig:ca-fsm}
 \end{figure}
 
@@ -359,8 +359,9 @@ to be transferred.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.6\linewidth]{fig/readout-sender}
-  \caption{Readout Sender }
+  \includegraphics[width=0.5\linewidth]{fig/readout-sender}
+  \caption[Readout Sender]{The readout sender orchestrates transfers of
+    readout-data to the host.}
   \label{fig:readout-sender}
 \end{figure}
 
@@ -398,9 +399,9 @@ the Information Sender will depend on this number.
 
 Many aspects of the CARP hardware platform are parameterized. With the
 introduction of the Readout module, a few new parameters have been added.
-Readout Buffer size, Readout Weight bits and Readout Address Bits are integer
+Readout Buffer size, Readout Weight Bits and Readout Address Bits are integer
 values controlling bus widths and buffer sizes. The CA Output Cells and CA
-Feedback Cells parameters are lists of (x, y, z) coordinate triplets indicating
+Feedback Cells parameters are lists of (z, y, x) coordinate triplets indicating
 the location of output and Feedback cells respectively. The Readout Topology
 parameter determines the number of network layers and number of neurons in each.
 For instance, Readout Topology value of $(10, 5, 3, 2, 1)$ will result in a 5
@@ -436,8 +437,8 @@ Feedback Cells.
     Readout Weight Bits       & [1,  8]     & Restricted by ISA/Decode         \\
     Readout Address Bits      & [1, 16]     & Restricted by ISA/Decode         \\
     Readout Topology          & N/A         & List of positive integers                  \\
-    CA Output Cells           & N/A         & List of (x, y, z) coordinates    \\
-    CA Feedback Cells         & N/A         & List of (x, y, z) coordinates    \\
+    CA Output Cells           & N/A         & List of (z, y, x) coordinates    \\
+    CA Feedback Cells         & N/A         & List of (z, y, x) coordinates    \\
     \end{tabular}
     \caption{List of parameters for the CARP hardware}
     \label{tbl:parameters}
@@ -447,7 +448,7 @@ Feedback Cells.
 
 \section{Software API}
 
-The CARP software API provides a clean and structure interface into controlling
+The CARP software API provides a clean and structured interface into controlling
 and utilizing the functionality implemented in the hardware part of the system.
 \figurename~\ref{fig:sw-api} shows how the API is structured. The main part,
 indicated in green, provides functions for connecting to, resetting, sending
@@ -462,7 +463,7 @@ functionality related to the Readout module has also been added.
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.5\linewidth]{fig/sw-api}
-  \caption{
+  \caption[CARP Software API]{
     Structure of the CARP API. The main API is colored green, optional utilities
     blue, internal dependencies yellow and external dependencies red. Modified
     reprint from~\cite{Lundal2015a}.
@@ -483,7 +484,7 @@ Section~\ref{sec:communication}.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\linewidth]{fig/convey-comm-flow}
-  \caption{
+  \caption[Host-Coprocessor communication flow]{
     Diagram illustrating the flow of communication between host and a Convey
     coprocessor.
   }
